@@ -343,3 +343,15 @@ BigNat BigNat::operator/(BigNat &rhs){
 BigNat BigNat::operator%(BigNat &rhs){
 	return MOD_NN_N(*this, rhs);
 };
+
+bool BigNat::operator<(BigNat rhs){
+	return COM_NN_D(*this, rhs) == CompareNat(rhsIsBigger);
+};
+
+bool BigNat::operator>(BigNat rhs){
+	return COM_NN_D(*this, rhs) == CompareNat(lhsIsBigger);
+};
+
+bool BigNat::operator==(BigNat rhs){
+	return COM_NN_D(*this, rhs) == CompareNat(equal);
+};

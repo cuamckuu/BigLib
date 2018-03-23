@@ -49,6 +49,10 @@ public:
 	BigNat operator/(BigNat &rhs);
 	BigNat operator%(BigNat &rhs);
 	
+	bool operator<(BigNat rhs);
+	bool operator>(BigNat rhs);
+	bool operator==(BigNat rhs);
+	
 	//=============================
 	
 	BigNat(std::string str);
