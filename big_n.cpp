@@ -313,6 +313,30 @@ BigNat LCM_NN_N(BigNat &lhs, BigNat &rhs){
 	return result;	
 };
 
+//=====Extra modules======
+BigNat FACTOR_N_N(BigNat n){
+	BigNat result("1");
+	
+	for(BigNat i("1"); i <= n; i++){
+		result = result * i;		
+	}
+	
+	return result;
+};
+
+BigNat FIB_N_N(BigNat n){
+	BigNat prev("0");
+	BigNat curr("1");
+	
+	for(BigNat i("0"); i < n; i++){
+		BigNat t = prev;
+		prev = curr;
+		curr = curr + t; 		
+	}
+	
+	return prev;
+};
+
 //======OPERATORS===========
 
 BigNat BigNat::operator++(int num){
