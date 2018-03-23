@@ -35,7 +35,7 @@ void BigNat::remove_leading_zeros(){
 	}
 }
 
-std::ostream& operator<< (std::ostream &stream, const BigNat &num){
+std::ostream& operator<< (std::ostream &stream, BigNat num){
 	/* Function prints current number to stream output */
 	
 	stream << (num.digits.empty() ? 0 : num.digits.back());
@@ -47,7 +47,7 @@ std::ostream& operator<< (std::ostream &stream, const BigNat &num){
 	return stream;
 }
 
-int COM_NN_D(BigNat lhs, BigNat rhs){
+int COM_NN_D(BigNat &lhs, BigNat &rhs){
 	/* Compare two nums, returns 0 if nums are equal, 1 if lhs < rhs, 2 if lhs > rhs */
 	
 	//Check by amount of digits
@@ -69,7 +69,7 @@ int COM_NN_D(BigNat lhs, BigNat rhs){
 	}
 }
 
-bool NZER_N_B(BigNat lhs){
+bool NZER_N_B(BigNat &lhs){
 	/* If number is not equal to zero returns true, else false */
 	
 	for(int i = 0; i < lhs.digits.size(); i++){
@@ -81,7 +81,7 @@ bool NZER_N_B(BigNat lhs){
 	return false;
 }
 
-BigNat ADD_1N_N(BigNat lhs){
+BigNat ADD_1N_N(BigNat &lhs){
 	/* Adds one to lhs, returns result */
 	
 	//Result is copy of current num
@@ -110,7 +110,7 @@ BigNat ADD_1N_N(BigNat lhs){
 	return result;
 }
 
-BigNat ADD_NN_N(BigNat lhs, BigNat rhs){
+BigNat ADD_NN_N(BigNat &lhs, BigNat &rhs){
 	/* Add two positive BigInt's returns result */
 	
 	//Result is copy of current num
@@ -138,7 +138,7 @@ BigNat ADD_NN_N(BigNat lhs, BigNat rhs){
 	return result;	
 }
 
-BigNat SUB_NN_N(BigNat lhs, BigNat rhs){
+BigNat SUB_NN_N(BigNat &lhs, BigNat &rhs){
 	/* If possible, substract rhs from lhs, returns result */
 	
 	//Smaller num for result and birrer for toSub
@@ -163,7 +163,7 @@ BigNat SUB_NN_N(BigNat lhs, BigNat rhs){
 	return result;	
 }
 
-BigNat MUL_ND_N(BigNat lhs, int multiplier){
+BigNat MUL_ND_N(BigNat &lhs, int multiplier){
 	/* Multiply lhs by natural multiplier, returns result */
 	
 	BigNat result = lhs;	
@@ -187,7 +187,7 @@ BigNat MUL_ND_N(BigNat lhs, int multiplier){
 	return result;
 };
 
-BigNat MUL_Nk_N(BigNat lhs, int k){
+BigNat MUL_Nk_N(BigNat &lhs, int k){
 	/* Miltiply lhs by 10^k, returns the result */
 	
 	//Adds k zeros to end of num
@@ -201,7 +201,7 @@ BigNat MUL_Nk_N(BigNat lhs, int k){
 	return result;
 };
 
-BigNat MUL_NN_N(BigNat lhs, BigNat rhs){
+BigNat MUL_NN_N(BigNat &lhs, BigNat &rhs){
 	/* Multiply lhs by rhs, returns result, not optimal 
 	per amount of multiplication to save some memory */
 	
@@ -221,7 +221,7 @@ BigNat MUL_NN_N(BigNat lhs, BigNat rhs){
 	return result;
 }
 
-BigNat SUB_NDN_N(BigNat lhs, int k, BigNat rhs){
+BigNat SUB_NDN_N(BigNat &lhs, int k, BigNat &rhs){
 	/* If possible, substract k*rhs from lhs, returns result */
 	
 	BigNat temp = rhs * k;
@@ -233,7 +233,7 @@ BigNat SUB_NDN_N(BigNat lhs, int k, BigNat rhs){
 	return result;
 }
 
-BigNat DIV_NN_Dk(BigNat lhs, BigNat rhs){
+BigNat DIV_NN_Dk(BigNat &lhs, BigNat &rhs){
 	/* Returns first num of lhs/rhs, miltiplied by 10^k */
 	
 	//Order of rhs sshould be less or equal
@@ -293,7 +293,7 @@ BigNat MOD_NN_N(BigNat lhs, BigNat rhs){
 BigNat GCD_NN_N(BigNat lhs, BigNat rhs){
 	/* Returns Greatest Common Divisor of lhs and rhs */
 	
-	//assert(("GCD_NN_N lhs == 0 or rhs == 0", NZER_N_B(lhs) && NZER_N_B(rhs)));
+	assert(("GCD_NN_N lhs == 0 or rhs == 0", NZER_N_B(lhs) && NZER_N_B(rhs)));
 	
 	while(NZER_N_B(rhs)){
 		lhs = lhs % rhs;
@@ -302,7 +302,7 @@ BigNat GCD_NN_N(BigNat lhs, BigNat rhs){
 	return lhs;
 };
 
-BigNat LCM_NN_N(BigNat lhs, BigNat rhs){
+BigNat LCM_NN_N(BigNat &lhs, BigNat &rhs){
 	/* Returns Least Common Multipler of lhs and rhs */
 	
 	//LCM(A,B) = (A*B) / GCD(A,B)
@@ -313,30 +313,6 @@ BigNat LCM_NN_N(BigNat lhs, BigNat rhs){
 	return result;	
 };
 
-//=====Extra modules======
-BigNat FACTOR_N_N(BigNat n){
-	BigNat result("1");
-	
-	for(BigNat i("1"); i <= n; i++){
-		result = result * i;		
-	}
-	
-	return result;
-};
-
-BigNat FIB_N_N(BigNat n){
-	BigNat prev("0");
-	BigNat curr("1");
-	
-	for(BigNat i("0"); i < n; i++){
-		BigNat t = prev;
-		prev = curr;
-		curr = curr + t; 		
-	}
-	
-	return prev;
-};
-
 //======OPERATORS===========
 
 BigNat BigNat::operator++(int num){
@@ -344,46 +320,46 @@ BigNat BigNat::operator++(int num){
 	return *this; 
 };
 
-BigNat BigNat::operator+(const BigNat &rhs){
+BigNat BigNat::operator+(BigNat &rhs){
 	return ADD_NN_N(*this, rhs);
 };
 
-BigNat BigNat::operator-(const BigNat &rhs){
+BigNat BigNat::operator-(BigNat &rhs){
 	return SUB_NN_N(*this, rhs);
 };
 
-BigNat BigNat::operator*(const BigNat &rhs){
+BigNat BigNat::operator*(BigNat &rhs){
 	return MUL_NN_N(*this, rhs);
 };
 
-BigNat BigNat::operator*(const int &rhs){
+BigNat BigNat::operator*(int &rhs){
 	return MUL_ND_N(*this, rhs);
 };
 
-BigNat BigNat::operator/(const BigNat &rhs){
+BigNat BigNat::operator/(BigNat &rhs){
 	return DIV_NN_N(*this, rhs);
 };
 
-BigNat BigNat::operator%(const BigNat &rhs){
+BigNat BigNat::operator%(BigNat &rhs){
 	return MOD_NN_N(*this, rhs);
 };
 
-bool BigNat::operator<(const BigNat &rhs){
+bool BigNat::operator<(BigNat rhs){
 	return COM_NN_D(*this, rhs) == CompareNat(rhsIsBigger);
 };
 
-bool BigNat::operator>(const BigNat &rhs){
+bool BigNat::operator>(BigNat rhs){
 	return COM_NN_D(*this, rhs) == CompareNat(lhsIsBigger);
 };
 
-bool BigNat::operator==(const BigNat &rhs){
+bool BigNat::operator==(BigNat rhs){
 	return COM_NN_D(*this, rhs) == CompareNat(equal);
 };
 
-bool BigNat::operator<=(const BigNat &rhs){
+bool BigNat::operator<=(BigNat rhs){
 	return (*this < rhs) || (*this == rhs);
 };
 
-bool BigNat::operator>=(const BigNat &rhs){
+bool BigNat::operator>=(BigNat rhs){
 	return (*this > rhs) || (*this == rhs);
 };

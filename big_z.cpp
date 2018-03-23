@@ -28,7 +28,7 @@ BigInt::BigInt(BigNat num, bool isNegative) : BigNat(num){
 }
 
 
-std::ostream& operator<< (std::ostream &stream, const BigInt &num){
+std::ostream& operator<< (std::ostream &stream, BigInt num){
 	/* Function prints current number to stream output */
 	
 	if(num.isNegative){
@@ -41,17 +41,6 @@ std::ostream& operator<< (std::ostream &stream, const BigInt &num){
 		stream << num.digits[i];	
 	}
 	
-	return stream;
-}
-
-std::istream& operator>> (std::istream &stream, BigInt &num){
-	/* Function read number from stream */
-
-	std::string temp;
-	stream >> temp;
-
-	num = BigInt(temp);
-
 	return stream;
 }
 
@@ -218,31 +207,25 @@ BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs){
 	return result;
 }
 
-//====Extra modules =====
-BigInt POW_ZZ_Z(BigInt lhs, BigInt rhs){
-	/* Fast pow lhs to rhs */
+//=====Extra operators======
+BigInt FACTOR_Z_Z(BigInt n){
+	BigInt result("1");
 	
-	assert(("POW_ZZ_Z No fraction support", rhs >= BigInt("0")));
-	
-	if(rhs == BigInt("0")){
-		return BigInt("1");
-	}else if(rhs % BigInt("2") == BigInt("1")){
-		return POW_ZZ_Z(lhs, rhs - BigInt("1")) * lhs;
-	}else{
-		BigInt temp = POW_ZZ_Z(lhs, rhs / BigInt("2"));
-		return temp * temp;
+	for(BigInt i("1"); i <= n; i++){
+		result = result * i;		
 	}
-}
-
+	
+	return result;
+};
 
 //======OPERATORS===========
 
 
-BigInt BigInt::operator+(const BigInt &rhs){
+BigInt BigInt::operator+(BigInt &rhs){
 	return ADD_ZZ_Z(*this, rhs);
 };
 
-BigInt BigInt::operator-(const BigInt &rhs){
+BigInt BigInt::operator-(BigInt &rhs){
 	return SUB_ZZ_Z(*this, rhs);
 };
 
@@ -250,35 +233,35 @@ BigInt BigInt::operator-(){
 	return MUL_ZM_Z(*this);
 };
 
-BigInt BigInt::operator*(const BigInt &rhs){
+BigInt BigInt::operator*(BigInt &rhs){
 	return MUL_ZZ_Z(*this, rhs);
 };
 
-BigInt BigInt::operator/(const BigInt &rhs){
+BigInt BigInt::operator/(BigInt &rhs){
 	return DIV_ZZ_Z(*this, rhs);
 };
 
-BigInt BigInt::operator%(const BigInt &rhs){
+BigInt BigInt::operator%(BigInt &rhs){
 	return MOD_ZZ_Z(*this, rhs);
 };
 
-bool BigInt::operator<(const BigInt &rhs){
+bool BigInt::operator<(BigInt rhs){
 	return POZ_Z_D(*this - rhs) == Sign(negative);
 };
 
-bool BigInt::operator>(const BigInt &rhs){
+bool BigInt::operator>(BigInt rhs){
 	return POZ_Z_D(*this - rhs) == Sign(positive);
 };
 
-bool BigInt::operator==(const BigInt &rhs){
-	return (BigNat(*this) == BigNat(rhs)) && (POZ_Z_D(*this) == POZ_Z_D(rhs));
+bool BigInt::operator==(BigInt rhs){
+	return (*this == rhs)  && (POZ_Z_D(*this - rhs) == Sign(zero));
 };
 
-bool BigInt::operator<=(const BigInt &rhs){
+bool BigInt::operator<=(BigInt rhs){
 	return (*this < rhs) || (*this == rhs);
 };
 
-bool BigInt::operator>=(const BigInt &rhs){
+bool BigInt::operator>=(BigInt rhs){
 	return (*this > rhs) || (*this == rhs);
 };
 
