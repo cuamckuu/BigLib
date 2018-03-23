@@ -355,3 +355,11 @@ bool BigNat::operator>(BigNat rhs){
 bool BigNat::operator==(BigNat rhs){
 	return COM_NN_D(*this, rhs) == CompareNat(equal);
 };
+
+bool BigNat::operator<=(BigNat rhs){
+	return (*this < rhs) || (*this == rhs);
+};
+
+bool BigNat::operator>=(BigNat rhs){
+	return (*this > rhs) || (*this == rhs);
+};

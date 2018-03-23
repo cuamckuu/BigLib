@@ -17,7 +17,7 @@ public:
 	//Author: Alex Kosh 7301
 	
 	friend BigNat ABS_Z_N(BigInt lhs); 				//Checked
-	friend int POZ_Z_D(BigInt &lhs); 				//Checked
+	friend int POZ_Z_D(BigInt lhs); 				//Checked
 	friend BigInt MUL_ZM_Z(BigInt lhs); 			//Checked
 	friend BigInt TRANS_N_Z(BigNat lhs); 			//Checked
 	friend BigNat TRANS_Z_N(BigInt lhs); 			//Checked
@@ -27,6 +27,10 @@ public:
 	friend BigInt DIV_ZZ_Z(BigInt lhs, BigInt rhs); //Checked
 	friend BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs); //Checked
 	
+	//==EXTRA MODULES==
+	friend BigInt FACTOR_Z_Z(BigInt lhs);
+	
+	
 	//==================
 	//======Operators support======
 	BigInt operator+(BigInt &rhs);
@@ -35,6 +39,12 @@ public:
 	BigInt operator*(BigInt &rhs);
 	BigInt operator/(BigInt &rhs);
 	BigInt operator%(BigInt &rhs);
+	
+	bool operator<(BigInt rhs);
+	bool operator>(BigInt rhs);
+	bool operator<=(BigInt rhs); 
+	bool operator>=(BigInt rhs);
+	bool operator==(BigInt rhs);
 	
 	//=============================
 	

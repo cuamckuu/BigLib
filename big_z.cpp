@@ -50,7 +50,7 @@ BigNat ABS_Z_N(BigInt lhs){
 	return BigNat(lhs);
 }
 
-int POZ_Z_D(BigInt &lhs){
+int POZ_Z_D(BigInt lhs){
 	/* Check number's sign */
 	
 	if(NZER_N_B(lhs) == false){
@@ -207,6 +207,17 @@ BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs){
 	return result;
 }
 
+//=====Extra operators======
+BigInt FACTOR_Z_Z(BigInt n){
+	BigInt result("1");
+	
+	for(BigInt i("1"); i <= n; i++){
+		result = result * i;		
+	}
+	
+	return result;
+};
+
 //======OPERATORS===========
 
 
@@ -232,5 +243,25 @@ BigInt BigInt::operator/(BigInt &rhs){
 
 BigInt BigInt::operator%(BigInt &rhs){
 	return MOD_ZZ_Z(*this, rhs);
+};
+
+bool BigInt::operator<(BigInt rhs){
+	return POZ_Z_D(*this - rhs) == Sign(negative);
+};
+
+bool BigInt::operator>(BigInt rhs){
+	return POZ_Z_D(*this - rhs) == Sign(positive);
+};
+
+bool BigInt::operator==(BigInt rhs){
+	return (*this == rhs)  && (POZ_Z_D(*this - rhs) == Sign(zero));
+};
+
+bool BigInt::operator<=(BigInt rhs){
+	return (*this < rhs) || (*this == rhs);
+};
+
+bool BigInt::operator>=(BigInt rhs){
+	return (*this > rhs) || (*this == rhs);
 };
 

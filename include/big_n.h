@@ -51,6 +51,8 @@ public:
 	
 	bool operator<(BigNat rhs);
 	bool operator>(BigNat rhs);
+	bool operator<=(BigNat rhs); 
+	bool operator>=(BigNat rhs);
 	bool operator==(BigNat rhs);
 	
 	//=============================
