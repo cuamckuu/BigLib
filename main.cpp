@@ -1,5 +1,5 @@
 #include <iostream>
-#include <windows.h>
+//#include <windows.h>
 #include "include/big_n.h"
 #include "include/big_z.h"
 #include "include/big_q.h"
