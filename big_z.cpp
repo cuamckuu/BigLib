@@ -207,16 +207,7 @@ BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs){
 	return result;
 }
 
-//=====Extra operators======
-BigInt FACTOR_Z_Z(BigInt n){
-	BigInt result("1");
-	
-	for(BigInt i("1"); i <= n; i++){
-		result = result * i;		
-	}
-	
-	return result;
-};
+
 
 //======OPERATORS===========
 
