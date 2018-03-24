@@ -3,9 +3,9 @@
 
 BigFra::BigFra(BigInt numerator, BigInt denominator): numerator(numerator), denominator(denominator)  {}
 
-BigFra BigFra::RED_Q_Q(BigFra &lhs) {
-    /*Function returns  abbreviated */
-
+/*BigFra BigFra::RED_Q_Q(BigFra &lhs) {
+ 	
+	
     BigInt num = lhs.numerator;
     BigInt denom = lhs.denominator;
     BigNat i = GCD_NN_N( ABS_Z_N(num), ABS_Z_N(denom));
@@ -14,15 +14,24 @@ BigFra BigFra::RED_Q_Q(BigFra &lhs) {
     lhs.denominator = DIV_ZZ_Z(denom, temp4);
 
     return lhs;
-}
-
-bool BigFra::INT_Q_B(BigInt lhs, BigInt rhs) {
-    /*if(lhs % rhs == BigInt("0")){
-    return true;
-}else{
-    return false;
 }*/
 
+BigFra RED_Q_Q(BigFra &lhs) {
+    /* œ≈–≈œ»—¿À */
+	BigFra temp = *this;
+	
+    BigInt gcd = BigInt(GCD_NN_N(temp.numerator, temp.denominator), false);
+    
+    temp.numerator = temp.numerator / gcd;
+    temp.denominator = temp.denominator / gcd;
+
+    return temp;
+}
+
+
+bool BigFra::INT_Q_B(BigInt lhs, BigInt rhs) {
+
+	/* ÃÓÎÓ‰Âˆ */
     return lhs % rhs == BigInt("0");
 }
 
