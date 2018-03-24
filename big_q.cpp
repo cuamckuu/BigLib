@@ -44,6 +44,16 @@ BigInt BigFra::TRANS_Q_Z(BigFra lhs) { //what we have to do with not "1" in denu
     return BigInt("0");
 }
 
+BigFra BigFra::MUL_QQ_Q(BigFra lhs, BigFra rhs) {
+    lhs.numerator = (MUL_ZZ_Z(lhs.numerator, rhs.numerator));
+    rhs.denominator = (MUL_ZZ_Z(lhs.denominator, rhs.denominator));
+    return BigFra(lhs.numerator,rhs.denominator);
+}
+
+BigFra BigFra::DIV_QQ_Q(BigFra lhs, BigFra rhs) {
+    
+}
+
 
 
 
