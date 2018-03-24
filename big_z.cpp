@@ -28,7 +28,7 @@ BigInt::BigInt(BigNat num, bool isNegative) : BigNat(num){
 }
 
 
-std::ostream& operator<< (std::ostream &stream, BigInt num){
+std::ostream& operator<< (std::ostream &stream, const BigInt &num){
 	/* Function prints current number to stream output */
 	
 	if(num.isNegative){
@@ -50,7 +50,7 @@ BigNat ABS_Z_N(BigInt lhs){
 	return BigNat(lhs);
 }
 
-int POZ_Z_D(BigInt &lhs){
+int POZ_Z_D(BigInt lhs){
 	/* Check number's sign */
 	
 	if(NZER_N_B(lhs) == false){
@@ -207,14 +207,31 @@ BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs){
 	return result;
 }
 
+//====Extra modules =====
+BigInt POW_ZZ_Z(BigInt lhs, BigInt rhs){
+	/* Fast pow lhs to rhs */
+	
+	assert(("POW_ZZ_Z No fraction support", rhs >= BigInt("0")));
+	
+	if(rhs == BigInt("0")){
+		return BigInt("1");
+	}else if(rhs % BigInt("2") == BigInt("1")){
+		return POW_ZZ_Z(lhs, rhs - BigInt("1")) * lhs;
+	}else{
+		BigInt temp = POW_ZZ_Z(lhs, rhs / BigInt("2"));
+		return temp * temp;
+	}
+}
+
+
 //======OPERATORS===========
 
 
-BigInt BigInt::operator+(BigInt &rhs){
+BigInt BigInt::operator+(const BigInt &rhs){
 	return ADD_ZZ_Z(*this, rhs);
 };
 
-BigInt BigInt::operator-(BigInt &rhs){
+BigInt BigInt::operator-(const BigInt &rhs){
 	return SUB_ZZ_Z(*this, rhs);
 };
 
@@ -222,15 +239,35 @@ BigInt BigInt::operator-(){
 	return MUL_ZM_Z(*this);
 };
 
-BigInt BigInt::operator*(BigInt &rhs){
+BigInt BigInt::operator*(const BigInt &rhs){
 	return MUL_ZZ_Z(*this, rhs);
 };
 
-BigInt BigInt::operator/(BigInt &rhs){
+BigInt BigInt::operator/(const BigInt &rhs){
 	return DIV_ZZ_Z(*this, rhs);
 };
 
-BigInt BigInt::operator%(BigInt &rhs){
+BigInt BigInt::operator%(const BigInt &rhs){
 	return MOD_ZZ_Z(*this, rhs);
+};
+
+bool BigInt::operator<(const BigInt &rhs){
+	return POZ_Z_D(*this - rhs) == Sign(negative);
+};
+
+bool BigInt::operator>(const BigInt &rhs){
+	return POZ_Z_D(*this - rhs) == Sign(positive);
+};
+
+bool BigInt::operator==(const BigInt &rhs){
+	return (BigNat(*this) == BigNat(rhs)) && (POZ_Z_D(*this) == POZ_Z_D(rhs));
+};
+
+bool BigInt::operator<=(const BigInt &rhs){
+	return (*this < rhs) || (*this == rhs);
+};
+
+bool BigInt::operator>=(const BigInt &rhs){
+	return (*this > rhs) || (*this == rhs);
 };
 
