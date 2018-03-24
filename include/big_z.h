@@ -11,41 +11,42 @@ private:
 	bool isNegative;
 	
 public:
-	friend std::ostream& operator<< (std::ostream &stream, BigInt num);
+	friend std::ostream& operator<< (std::ostream &stream, const BigInt &num);
 	
 	//=====MODULES=====
 	//Author: Alex Kosh 7301
 	
-	friend BigNat ABS_Z_N(BigInt lhs); 				//Checked
-	friend int POZ_Z_D(BigInt lhs); 				//Checked
-	friend BigInt MUL_ZM_Z(BigInt lhs); 			//Checked
-	friend BigInt TRANS_N_Z(BigNat lhs); 			//Checked
-	friend BigNat TRANS_Z_N(BigInt lhs); 			//Checked
-	friend BigInt ADD_ZZ_Z(BigInt lhs, BigInt rhs); //Checked
-	friend BigInt SUB_ZZ_Z(BigInt lhs, BigInt rhs); //Checked
-	friend BigInt MUL_ZZ_Z(BigInt lhs, BigInt rhs); //Checked
-	friend BigInt DIV_ZZ_Z(BigInt lhs, BigInt rhs); //Checked
-	friend BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs); //Checked
-
-    friend bool INT_Q_B(BigInt lhs, BigInt rhs);
-	//==EXTRA MODULES==
-	friend BigInt FACTOR_Z_Z(BigInt lhs);
+	friend BigNat ABS_Z_N(BigInt lhs); 				 
+	friend int POZ_Z_D(BigInt lhs); 				 
+	friend BigInt MUL_ZM_Z(BigInt lhs); 			 
+	friend BigInt TRANS_N_Z(BigNat lhs); 			 
+	friend BigNat TRANS_Z_N(BigInt lhs); 			 
+	friend BigInt ADD_ZZ_Z(BigInt lhs, BigInt rhs);  
+	friend BigInt SUB_ZZ_Z(BigInt lhs, BigInt rhs);  
+	friend BigInt MUL_ZZ_Z(BigInt lhs, BigInt rhs);  
+	friend BigInt DIV_ZZ_Z(BigInt lhs, BigInt rhs);  
+	friend BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs);  
 	
+	//====Extra modules====
+	
+	friend BigInt POW_ZZ_Z(BigInt lhs, BigInt rhs);
 	
 	//==================
-	//======Operators support======
-	BigInt operator+(BigInt &rhs);
-	BigInt operator-(BigInt &rhs);
-	BigInt operator-();
-	BigInt operator*(BigInt &rhs);
-	BigInt operator/(BigInt &rhs);
-	BigInt operator%(BigInt &rhs);
+	friend BigFra TRANS_Z_Q(BigInt lhs);
 	
-	bool operator<(BigInt rhs);
-	bool operator>(BigInt rhs);
-	bool operator<=(BigInt rhs); 
-	bool operator>=(BigInt rhs);
-	bool operator==(BigInt rhs);
+	//======Operators support======
+	BigInt operator+(const BigInt &rhs);
+	BigInt operator-(const BigInt &rhs);
+	BigInt operator-();
+	BigInt operator*(const BigInt &rhs);
+	BigInt operator/(const BigInt &rhs);
+	BigInt operator%(const BigInt &rhs);
+	
+	bool operator<(const BigInt &rhs);
+	bool operator>(const BigInt &rhs);
+	bool operator<=(const BigInt &rhs); 
+	bool operator>=(const BigInt &rhs);
+	bool operator==(const BigInt &rhs);
 	
 	//=============================
 	

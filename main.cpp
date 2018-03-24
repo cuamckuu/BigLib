@@ -5,23 +5,17 @@
 #include "include/big_q.h"
 
 int main(){
-	std::cout << "fork is started" << "\n";
-	std::string a, b;
-	bool boo = 0;
-
-	std::cin >> a >> b;
+	std::string a, b, c, d;
 	
-	BigInt temp1(a), temp2(b);
-	BigFra temp3(a,b);
-    TRANS_Z_Q(temp1);
+	std::cin >> a >> b >> c >> d;
+	
+	BigFra temp1(a,b), temp2(c, d);
 
-    std::cout << "what what what" << std::endl;
-
-	std::cout << temp1 + temp2 << "\n";
-	std::cout << temp1 - temp2 << "\n";
-	std::cout << temp1 * temp2 << "\n";
-	std::cout << temp1 / temp2 << "\n";
-	std::cout << temp1 % temp2 << "\n";
+    std::cout << temp1 << " " << temp2  << std::endl;
+    std::cout << temp1 + temp2  << std::endl;
+    std::cout << temp1 - temp2  << std::endl;
+    std::cout << temp1 / temp2  << std::endl;
+    std::cout << temp1 * temp2  << std::endl;
 	
 	system("pause");
 }
