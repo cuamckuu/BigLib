@@ -11,7 +11,7 @@ private:
 	bool isNegative;
 	
 public:
-	friend std::ostream& operator<< (std::ostream &stream, BigInt num);
+	friend std::ostream& operator<< (std::ostream &stream, const BigInt &num);
 	
 	//=====MODULES=====
 	//Author: Alex Kosh 7301
@@ -27,21 +27,24 @@ public:
 	friend BigInt DIV_ZZ_Z(BigInt lhs, BigInt rhs);  
 	friend BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs);  
 	
+	//====Extra modules====
+	
+	friend BigInt POW_ZZ_Z(BigInt lhs, BigInt rhs);
 	
 	//==================
 	//======Operators support======
-	BigInt operator+(BigInt &rhs);
-	BigInt operator-(BigInt &rhs);
+	BigInt operator+(const BigInt &rhs);
+	BigInt operator-(const BigInt &rhs);
 	BigInt operator-();
-	BigInt operator*(BigInt &rhs);
-	BigInt operator/(BigInt &rhs);
-	BigInt operator%(BigInt &rhs);
+	BigInt operator*(const BigInt &rhs);
+	BigInt operator/(const BigInt &rhs);
+	BigInt operator%(const BigInt &rhs);
 	
-	bool operator<(BigInt rhs);
-	bool operator>(BigInt rhs);
-	bool operator<=(BigInt rhs); 
-	bool operator>=(BigInt rhs);
-	bool operator==(BigInt rhs);
+	bool operator<(const BigInt &rhs);
+	bool operator>(const BigInt &rhs);
+	bool operator<=(const BigInt &rhs); 
+	bool operator>=(const BigInt &rhs);
+	bool operator==(const BigInt &rhs);
 	
 	//=============================
 	
