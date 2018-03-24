@@ -3,25 +3,15 @@
 
 BigFra::BigFra(BigInt numerator, BigInt denominator): numerator(numerator), denominator(denominator)  {}
 
-/*BigFra BigFra::RED_Q_Q(BigFra &lhs) {
- 	
-	
-    BigInt num = lhs.numerator;
-    BigInt denom = lhs.denominator;
-    BigNat i = GCD_NN_N( ABS_Z_N(num), ABS_Z_N(denom));
-    BigInt temp4(i, false);
-    lhs.numerator = DIV_ZZ_Z(num, temp4);
-    lhs.denominator = DIV_ZZ_Z(denom, temp4);
-
-    return lhs;
-}*/
 
 BigFra RED_Q_Q(BigFra &lhs) {
-    /* œ≈–≈œ»—¿À */
-	BigFra temp = *this;
-	
+
+    /*function became greatest common multiple of num and denum*/
+    /*after that it devide num and denum on gcd, and returns it*/
+	BigFra temp = lhs;
+
     BigInt gcd = BigInt(GCD_NN_N(temp.numerator, temp.denominator), false);
-    
+
     temp.numerator = temp.numerator / gcd;
     temp.denominator = temp.denominator / gcd;
 
@@ -29,22 +19,21 @@ BigFra RED_Q_Q(BigFra &lhs) {
 }
 
 
-bool BigFra::INT_Q_B(BigInt lhs, BigInt rhs) {
+bool INT_Q_B(BigInt lhs, BigInt rhs) {
+    /*function returns 1 if remaider lhs%rhs*/
 
-	/* ÃÓÎÓ‰Âˆ */
-    return lhs % rhs == BigInt("0");
+    return (lhs % rhs == BigInt("0"));
 }
 
-
-
-BigFra BigFra::TRANS_Z_Q(BigInt lhs) {
+BigFra TRANS_Z_Q(BigInt lhs) {
     /*          */
 
     BigInt denum("1");
+    std::cout << "forsacen: " << lhs << "  " << denum << std::endl;
     return BigFra(lhs, denum);
 }
 
-BigInt BigFra::TRANS_Q_Z(BigFra lhs) { //what we have to do with not "1" in denum?
+BigInt TRANS_Q_Z(BigFra lhs) {
 
 
     if(lhs.denominator == BigInt("1")){
@@ -53,15 +42,26 @@ BigInt BigFra::TRANS_Q_Z(BigFra lhs) { //what we have to do with not "1" in denu
     return BigInt("0");
 }
 
-BigFra BigFra::MUL_QQ_Q(BigFra lhs, BigFra rhs) {
+BigFra MUL_QQ_Q(BigFra lhs, BigFra rhs) {
+    /* */
+
     lhs.numerator = (MUL_ZZ_Z(lhs.numerator, rhs.numerator));
     rhs.denominator = (MUL_ZZ_Z(lhs.denominator, rhs.denominator));
     return BigFra(lhs.numerator,rhs.denominator);
 }
 
-BigFra BigFra::DIV_QQ_Q(BigFra lhs, BigFra rhs) {
-    
+BigFra DIV_QQ_Q(BigFra lhs, BigFra rhs) {
+    /* */
+
+    if(rhs.numerator == BigInt("0")){
+        //Here isn't error message
+    } else {
+        lhs.numerator = (MUL_ZZ_Z(lhs.numerator, rhs.denominator));
+        rhs.denominator = (MUL_ZZ_Z(lhs.denominator, rhs.numerator));
+    }
+    return BigFra(lhs.numerator,rhs.denominator);
 }
+
 
 
 

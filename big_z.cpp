@@ -254,7 +254,7 @@ bool BigInt::operator>(BigInt rhs){
 };
 
 bool BigInt::operator==(BigInt rhs){
-	return (*this == rhs)  && (POZ_Z_D(*this - rhs) == Sign(zero));
+    return (BigNat(*this) == BigNat(rhs)) && (POZ_Z_D(*this) == POZ_Z_D(rhs));
 };
 
 bool BigInt::operator<=(BigInt rhs){

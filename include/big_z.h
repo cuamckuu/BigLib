@@ -26,7 +26,8 @@ public:
 	friend BigInt MUL_ZZ_Z(BigInt lhs, BigInt rhs); //Checked
 	friend BigInt DIV_ZZ_Z(BigInt lhs, BigInt rhs); //Checked
 	friend BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs); //Checked
-	
+
+    friend bool INT_Q_B(BigInt lhs, BigInt rhs);
 	//==EXTRA MODULES==
 	friend BigInt FACTOR_Z_Z(BigInt lhs);
 	
