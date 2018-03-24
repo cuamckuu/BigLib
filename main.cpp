@@ -10,11 +10,8 @@ int main(){
 	
 	BigInt temp1(a), temp2(b);
 	
-	std::cout << temp1 + temp2 << "\n";
-	std::cout << temp1 - temp2 << "\n";
-	std::cout << temp1 * temp2 << "\n";
-	std::cout << temp1 / temp2 << "\n";
-	std::cout << temp1 % temp2 << "\n";
+	std::cout << POW_ZZ_Z(temp1, temp2) << "\n";
+	
 	
 	system("pause");
 }
