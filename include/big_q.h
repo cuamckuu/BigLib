@@ -10,7 +10,8 @@ private:
 	BigInt denominator;
 
 public:
-	friend std::ostream& operator<< (std::ostream &stream, BigFra num);
+	friend std::ostream& operator<< (std::ostream &stream, BigFra &num);
+	friend std::istream& operator>> (std::istream &stream, BigFra &num);
 
 	//=====MODULES=====
 	//Author: Demid Tremp 7301
@@ -31,10 +32,19 @@ public:
     BigFra operator-(const BigFra &rhs);
     BigFra operator/(const BigFra &rhs);
     BigFra operator*(const BigFra &rhs);
+    
+    bool operator<(const BigFra &rhs);
+    bool operator>(const BigFra &rhs);
+    bool operator<=(const BigFra &rhs);
+    bool operator>=(const BigFra &rhs);
+	bool operator==(const BigFra &rhs);
+    bool operator!=(const BigFra &rhs);
 
 	//===================
+	BigFra();
 	BigFra(BigInt numenator, BigInt denuminator);
 	void normalise();
+	std::string to_float(int precision);
 };
 
 #endif

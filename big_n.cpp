@@ -6,10 +6,13 @@
 
 BigNat::BigNat(){
 	/* Initializer. */
+	*this = BigNat("0");
 }
 
 BigNat::BigNat(std::string str){
 	/* Initializer. Takes string representation of big num */
+	
+	digits.clear();
 	
 	//Get digits from string and add to vector
 	for (int i = str.length() - 1; i >= 0; i--){
@@ -43,6 +46,17 @@ std::ostream& operator<< (std::ostream &stream, const BigNat &num){
 	for(int i = (int)num.digits.size() - 2; i >= 0; --i){
 		stream << num.digits[i];	
 	}
+	
+	return stream;
+}
+
+std::istream& operator>> (std::istream &stream, BigNat &num){
+	/* Function read number from stream */
+	
+	std::string temp;
+	stream >> temp;
+	
+	num = BigNat(temp);
 	
 	return stream;
 }
