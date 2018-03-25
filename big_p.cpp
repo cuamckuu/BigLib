@@ -38,7 +38,11 @@ BigPol ADD_PP_P(BigPol lhs, BigPol rhs) {
     BigPol result = lhs;
     int max_len = std::max(result.coefs.size(), rhs.coefs.size());
     for(int i = 0; i < max_len; i++){
-        result.coefs[i] = result.coefs[i] + (i < rhs.coefs.size() ? rhs.coefs[i] : BigFra(BigInt("0"), BigInt("1")));
+
+        if(i < result.coefs.size())
+            result.coefs[i] = result.coefs[i] + (i < rhs.coefs.size() ? rhs.coefs[i] : BigFra(BigInt("0"), BigInt("1")));
+        else
+            result.coefs.push_back(rhs.coefs[i]);
     }
     return result;
 }
@@ -70,6 +74,18 @@ BigPol MUL_Pxk_P(BigPol lhs, int k) {
     return lhs;
 }
 
+BigPol MUL_PP_P(BigPol lhs, BigPol rhs) {
+    BigPol result = lhs * rhs.coefs[0];
+
+    for (int i = 1; i < rhs.coefs.size(); ++i) {
+
+        BigPol anotherPol = lhs * rhs.coefs[i];
+        anotherPol = anotherPol * i;
+        result = result + anotherPol;
+    }
+    return result;
+}
+
 BigPol BigPol::operator+(const BigPol &rhs) {
     return ADD_PP_P(*this, rhs);
 }
@@ -86,8 +102,6 @@ BigPol BigPol::operator*(const int &rhs) {
     return MUL_Pxk_P(*this, rhs);
 }
 
-
-
-
-
-
+BigPol BigPol::operator*(const BigPol &rhs) {
+    return MUL_PP_P(*this, rhs);
+}
