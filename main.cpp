@@ -16,16 +16,16 @@ int main(){
     f = "";
 
     getline(std::cin, e);
-    //getline(std::cin, f);
+    getline(std::cin, f);
     BigPol temp3(e);
-    //BigPol temp4{f};
+    BigPol temp4{f};
 
 //    std::cin >> a >> b;
 //    BigFra temp5(a, b);
 
 
-    //std::cout << temp3 - temp4;
-    std::cout << temp3 * 2;
+//    std::cout << temp3 + temp4 << "\n";
+    std::cout << temp3 * temp4;
 
 
 //    std::cout << temp1 << " " << temp2  << std::endl;
