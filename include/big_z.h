@@ -32,6 +32,8 @@ public:
 	friend BigInt POW_ZZ_Z(BigInt lhs, BigInt rhs);
 	
 	//==================
+	friend BigFra TRANS_Z_Q(BigInt lhs);
+	
 	//======Operators support======
 	BigInt operator+(const BigInt &rhs);
 	BigInt operator-(const BigInt &rhs);

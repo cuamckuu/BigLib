@@ -5,6 +5,7 @@
 #define BIG_N_H 
 
 class BigInt;
+class BigFra;
 
 enum CompareNat : int {equal, rhsIsBigger, lhsIsBigger};
 
@@ -18,7 +19,6 @@ public:
 	
 	//=====MODULES=====
 	//Author: Alex Kosh 7301
-	//Problems witr cout function return
 	
 	friend int COM_NN_D(BigNat lhs, BigNat rhs); 				 
 	friend bool NZER_N_B(BigNat lhs); 							 
@@ -35,9 +35,10 @@ public:
 	friend BigNat GCD_NN_N(BigNat lhs, BigNat rhs);				 
 	friend BigNat LCM_NN_N(BigNat lhs, BigNat rhs);			 
 	
-	//==Friends for BigNat==
+	//==Friends for BigInt and BigFra==
 	friend BigInt TRANS_N_Z(BigNat lhs);
 	friend BigNat TRANS_Z_N(BigInt lhs);
+	friend BigFra TRANS_Z_Q(BigInt lhs);
 	
 	//======================
 	//==EXTRA MODULES==

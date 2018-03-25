@@ -1,4 +1,6 @@
+#include <assert.h>
 #include "include/big_q.h"
+
 
 BigFra::BigFra(BigInt numerator, BigInt denominator): numerator(numerator), denominator(denominator)  {
 	*this = RED_Q_Q(*this);
@@ -31,7 +33,7 @@ BigInt TRANS_Q_Z(BigFra lhs) {
 	/* If possible, transform fraction to integer returns result, else returns minus zero*/
 	
     if(INT_Q_B(lhs) == true){
-        return lhs.numerator / lhs.denumenator;
+        return lhs.numerator / lhs.denominator;
     }
     return BigInt("-0");
 }
@@ -48,7 +50,7 @@ BigFra MUL_QQ_Q(BigFra lhs, BigFra rhs) {
 BigFra DIV_QQ_Q(BigFra lhs, BigFra rhs) {
     /* Divede lhs to rhs, returns result */
 	
-	assert(("DIV_QQ_Q rhs is zero", rhs.numerator != BigInt("0"));
+	assert(("DIV_QQ_Q rhs is zero", !(rhs.numerator == BigInt("0"))));
 
     lhs.numerator = lhs.numerator * rhs.denominator;
     rhs.denominator = lhs.denominator * rhs.numerator;
