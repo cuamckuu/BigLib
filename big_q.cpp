@@ -1,7 +1,19 @@
+#include <sstream>
 #include "include/big_q.h"
 
 BigFra::BigFra(BigInt numerator, BigInt denominator): numerator(numerator), denominator(denominator)  {
 	*this = RED_Q_Q(*this);
+}
+
+BigFra::BigFra(std::string str) : numerator("0"), denominator("0") {
+    std::stringstream ss(str);
+
+    BigInt temp("0");
+    while(ss >> temp){
+        numerator = temp;
+        ss >> temp;
+        denominator = temp;
+    }
 }
 
 std::ostream& operator<< (std::ostream &stream, BigFra num){
@@ -17,7 +29,7 @@ std::ostream& operator<< (std::ostream &stream, BigFra num){
 void BigFra::normalise(){
     int isNegative1 = POZ_Z_D(numerator);
     int isNegative2 = POZ_Z_D(denominator);
-    if(isNegative1 == isNegative2){
+    if(isNegative1 == isNegative2 || numerator == BigInt("0")){
         numerator = BigInt(numerator, false);
         denominator = BigInt(denominator, false);
     }else{
@@ -130,6 +142,8 @@ BigFra BigFra::operator*(const BigFra &rhs){
 BigFra BigFra::operator/(const BigFra &rhs){
     return DIV_QQ_Q(*this, rhs);
 }
+
+
 
 
 

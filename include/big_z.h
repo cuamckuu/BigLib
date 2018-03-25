@@ -12,7 +12,7 @@ private:
 	
 public:
 	friend std::ostream& operator<< (std::ostream &stream, const BigInt &num);
-	
+	friend std::istream& operator>> (std::istream &stream, BigInt &num);
 	//=====MODULES=====
 	//Author: Alex Kosh 7301
 	

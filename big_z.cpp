@@ -44,6 +44,17 @@ std::ostream& operator<< (std::ostream &stream, const BigInt &num){
 	return stream;
 }
 
+std::istream& operator>> (std::istream &stream, BigInt &num){
+	/* Function read number from stream */
+
+	std::string temp;
+	stream >> temp;
+
+	num = BigInt(temp);
+
+	return stream;
+}
+
 BigNat ABS_Z_N(BigInt lhs){
 	/* Returns absolute value of num by converting to natural */
 	

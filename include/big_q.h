@@ -31,7 +31,8 @@ public:
     BigFra operator/(const BigFra &rhs);
     BigFra operator*(const BigFra &rhs);
     
-	BigFra(BigInt numenator, BigInt denuminator); //no realisation;
+	BigFra(BigInt numenator, BigInt denuminator);
+	BigFra(std::string str);
 
 };
 
