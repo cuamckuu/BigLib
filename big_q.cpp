@@ -9,11 +9,10 @@ std::ostream& operator<< (std::ostream &stream, BigFra num){
 	
     num = RED_Q_Q(num);
     num.normalise();
-    stream << num.numerator << "/" << num.denominator;
+    stream << num.numerator << "/" << num.denominator << "\n";
 
     return stream;
 }
-
 
 void BigFra::normalise(){
     int isNegative1 = POZ_Z_D(numerator);
