@@ -14,63 +14,7 @@ std::ostream& operator<< (std::ostream &stream, BigFra num){
     return stream;
 }
 
-
-void BigFra::normalise(){
-    int isNegative1 = POZ_Z_D(numerator);
-    int isNegative2 = POZ_Z_D(denominator);
-    if(isNegative1 == isNegative2){
-        numerator = BigInt(numerator, false);
-        denominator = BigInt(denominator, false);
-    }else{
-        numerator = BigInt(numerator, true);
-        denominator = BigInt(denominator, false);
-    }
-}
-
-BigFra RED_Q_Q(BigFra lhs) {
-    BigFra temp = lhs;
-	
-    BigInt gcd = BigInt(GCD_NN_N(temp.numerator, temp.denominator), false);
-
-    temp.numerator = temp.numerator / gcd;
-    temp.denominator = temp.denominator / gcd;
-
-    return temp;
-}
-/*
-BigFra ADD_QQ_Q(BigFra lhs, BigFra rhs) {
-
-    BigInt lcm(LCM_NN_N(lhs.denominator, rhs.denominator), false);
-
-    lhs.numerator = lhs.numerator * lcm / lhs.denominator;
-    lhs.denominator = lcm;
-
-    rhs.numerator = rhs.numerator * lcm / rhs.denominator;
-    rhs.denominator = lcm;
-
-    BigFra temp(lhs.numerator + rhs.numerator, lcm);
-
-    return RED_Q_Q(temp);
-}*/
-
-BigFra ADD_QQ_Q(BigFra lhs, BigFra rhs) {
-    BigInt lcm = lhs.denominator * rhs.denominator;
-
-    lhs.numerator = lhs.numerator * rhs.denominator;
-    rhs.numerator = rhs.numerator * lhs.denominator;
-
-    BigFra temp(lhs.numerator + rhs.numerator, lcm);
-
-    return RED_Q_Q(temp);
-}
-
-BigFra SUB_QQ_Q(BigFra lhs, BigFra rhs) {
-	//USE ADD
-    rhs.numerator = MUL_ZM_Z(rhs.numerator);
-
-    return ADD_QQ_Q(lhs, rhs);
-}
-
+//Demid's function's
 bool INT_Q_B(BigInt lhs, BigInt rhs) {
     /* Checks if fraction is integer */
 
@@ -112,6 +56,49 @@ BigFra DIV_QQ_Q(BigFra lhs, BigFra rhs) {
         rhs.denominator = (MUL_ZZ_Z(lhs.denominator, rhs.numerator));
     }
     return BigFra(lhs.numerator,rhs.denominator);
+}
+
+
+//Stepan's function's
+BigFra RED_Q_Q(BigFra lhs) {
+    BigFra temp = lhs;
+
+    BigInt gcd = BigInt(GCD_NN_N(temp.numerator, temp.denominator), false);
+
+    temp.numerator = temp.numerator / gcd;
+    temp.denominator = temp.denominator / gcd;
+
+    return temp;
+}
+
+BigFra ADD_QQ_Q(BigFra lhs, BigFra rhs) {
+    BigInt lcm = lhs.denominator * rhs.denominator;
+
+    lhs.numerator = lhs.numerator * rhs.denominator;
+    rhs.numerator = rhs.numerator * lhs.denominator;
+
+    BigFra temp(lhs.numerator + rhs.numerator, lcm);
+
+    return RED_Q_Q(temp);
+}
+
+BigFra SUB_QQ_Q(BigFra lhs, BigFra rhs) {
+    //USE ADD
+    rhs.numerator = MUL_ZM_Z(rhs.numerator);
+
+    return ADD_QQ_Q(lhs, rhs);
+}
+
+void BigFra::normalise(){
+    int isNegative1 = POZ_Z_D(numerator);
+    int isNegative2 = POZ_Z_D(denominator);
+    if(isNegative1 == isNegative2){
+        numerator = BigInt(numerator, false);
+        denominator = BigInt(denominator, false);
+    }else{
+        numerator = BigInt(numerator, true);
+        denominator = BigInt(denominator, false);
+    }
 }
 
 //==OPERATORS===
