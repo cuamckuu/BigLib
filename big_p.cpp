@@ -1,4 +1,3 @@
-
 #include "include/big_p.h"
 
 std::ostream& operator<<(std::ostream &stream, const BigPol &pol){
@@ -75,6 +74,7 @@ BigPol MUL_Pxk_P(BigPol lhs, int k) {
 }
 
 BigPol MUL_PP_P(BigPol lhs, BigPol rhs) {
+
     BigPol result = lhs * rhs.coefs[0];
 
     for (int i = 1; i < rhs.coefs.size(); ++i) {
