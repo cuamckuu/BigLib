@@ -293,7 +293,7 @@ BigNat MOD_NN_N(BigNat lhs, BigNat rhs){
 BigNat GCD_NN_N(BigNat lhs, BigNat rhs){
 	/* Returns Greatest Common Divisor of lhs and rhs */
 	
-	assert(("GCD_NN_N lhs == 0 or rhs == 0", NZER_N_B(lhs) && NZER_N_B(rhs)));
+	//assert(("GCD_NN_N lhs == 0 or rhs == 0", NZER_N_B(lhs) && NZER_N_B(rhs)));
 	
 	while(NZER_N_B(rhs)){
 		lhs = lhs % rhs;
