@@ -4,18 +4,8 @@
 #include "include/big_z.h"
 #include "include/big_q.h"
 
-int main(){
-	std::string a, b, c, d;
-	
-	std::cin >> a >> b >> c >> d;
-	
-	BigFra temp1(a,b), temp2(c, d);
+int parse_args(int argc, char *argv[]);
 
-    std::cout << temp1 << " " << temp2  << std::endl;
-    std::cout << temp1 + temp2  << std::endl;
-    std::cout << temp1 - temp2  << std::endl;
-    std::cout << temp1 / temp2  << std::endl;
-    std::cout << temp1 * temp2  << std::endl;
-	
-	system("pause");
+int main(int argc, char *argv[]){
+	parse_args(argc, argv);
 }
