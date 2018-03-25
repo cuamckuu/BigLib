@@ -20,12 +20,9 @@ public:
     friend BigFra DIV_QQ_Q(BigFra lhs, BigFra rhs);
 
 	//Author: Stepan Fed
-
 	friend BigFra RED_Q_Q(BigFra lhs);
 	friend BigFra ADD_QQ_Q(BigFra lhs, BigFra rhs);
 	friend BigFra SUB_QQ_Q(BigFra lhs, BigFra rhs);
-
-    void normalise();
 
 	//======Operators support======
     BigFra operator+(const BigFra &rhs);
@@ -35,7 +32,7 @@ public:
 
 	//===================
 	BigFra(BigInt numenator, BigInt denuminator);
-
+	void normalise();
 };
 
 #endif
