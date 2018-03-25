@@ -16,16 +16,17 @@ public:
     friend BigPol ADD_PP_P(BigPol lhs, BigPol rhs);
     friend BigPol MUL_PQ_P(BigPol lhs, BigFra rhs);
     friend BigPol SUB_PP_P(BigPol lhs, BigPol rhs);
+    friend BigPol MUL_Pxk_P(BigPol lhs, int k);
 
     //======Operators support======
     BigPol operator+(const BigPol &rhs);
     BigPol operator-(const BigPol &rhs);
     BigPol operator*(const BigFra &rhs);
+    BigPol operator*(const int &rhs);
     //BigPol operator*(const BigPol &rhs);
 
     BigPol operator/(const BigPol &rhs);
     BigPol operator%(const BigPol &rhs);
-
     bool operator==(const BigPol &rhs);
 
     //=============================

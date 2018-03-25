@@ -9,7 +9,7 @@ std::ostream& operator<< (std::ostream &stream, BigFra num){
 	
     num = RED_Q_Q(num);
     num.normalise();
-    stream << num.numerator << "/" << num.denominator << "\n";
+    stream << num.numerator << "/" << num.denominator;
 
     return stream;
 }
