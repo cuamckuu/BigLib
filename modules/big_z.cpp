@@ -1,7 +1,7 @@
 #include <cmath>
 #include <assert.h>
 #include <string>
-#include "include/big_z.h"
+#include "../include/big_z.h"
 
 BigInt::BigInt(){
 	/* Initializer */

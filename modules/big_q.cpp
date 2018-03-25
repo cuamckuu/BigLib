@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <sstream>
-#include "include/big_q.h"
+#include "../include/big_q.h"
 
 BigFra::BigFra(): numerator("0"), denominator("1")  {
 }

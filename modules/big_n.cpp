@@ -1,8 +1,8 @@
 #include <cmath>
 #include <assert.h>
 #include <string>
-#include "include/big_n.h"
-#include "include/big_z.h"
+#include "../include/big_n.h"
+#include "../include/big_z.h"
 
 BigNat::BigNat(){
 	/* Initializer. */

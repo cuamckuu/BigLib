@@ -1,7 +1,7 @@
 #include <sstream>
 #include <algorithm>
 #include <string>
-#include "include/big_p.h"
+#include "../include/big_p.h"
 
 std::ostream& operator<<(std::ostream &stream, BigPol pol){
 	BigFra zero = BigFra(BigInt("0"), BigInt("1"));
