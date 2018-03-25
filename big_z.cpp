@@ -3,8 +3,16 @@
 #include <string>
 #include "include/big_z.h"
 
+BigInt::BigInt(){
+	/* Initializer */
+	
+	*this = BigInt("0");
+}
+
 BigInt::BigInt(std::string str){
 	/* Initializer. Takes string representation of big num */
+	
+	digits.clear();
 	
 	isNegative = false;
 	//Get digits from string and add to vector
@@ -40,6 +48,17 @@ std::ostream& operator<< (std::ostream &stream, const BigInt &num){
 	for(int i = (int)num.digits.size() - 2; i >= 0; --i){
 		stream << num.digits[i];	
 	}
+	
+	return stream;
+}
+
+std::istream& operator>> (std::istream &stream, BigInt &num){
+	/* Function read number from stream */
+	
+	std::string temp;
+	stream >> temp;
+	
+	num = BigInt(temp);
 	
 	return stream;
 }

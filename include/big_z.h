@@ -12,6 +12,7 @@ private:
 	
 public:
 	friend std::ostream& operator<< (std::ostream &stream, const BigInt &num);
+	friend std::istream& operator>> (std::istream &stream, BigInt &num);
 	
 	//=====MODULES=====
 	//Author: Alex Kosh 7301
@@ -27,11 +28,12 @@ public:
 	friend BigInt DIV_ZZ_Z(BigInt lhs, BigInt rhs);  
 	friend BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs);  
 	
-	//====Extra modules====
+	//====Extra modules==========
 	
 	friend BigInt POW_ZZ_Z(BigInt lhs, BigInt rhs);
 	
-	//==================
+	//============================
+	//====Friends for BigFra======
 	friend BigFra TRANS_Z_Q(BigInt lhs);
 	
 	//======Operators support======
@@ -50,6 +52,7 @@ public:
 	
 	//=============================
 	
+	BigInt();
 	BigInt(std::string str);
 	BigInt(BigNat num, bool isNegative);
 };

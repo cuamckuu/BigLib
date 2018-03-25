@@ -1,12 +1,15 @@
 #include <assert.h>
+#include <sstream>
 #include "include/big_q.h"
 
+BigFra::BigFra(): numerator("0"), denominator("1")  {
+}
 
 BigFra::BigFra(BigInt numerator, BigInt denominator): numerator(numerator), denominator(denominator)  {
 	*this = RED_Q_Q(*this);
 }
 
-std::ostream& operator<< (std::ostream &stream, BigFra num){
+std::ostream& operator<< (std::ostream &stream, BigFra &num){
     /* Function prints current number to stream output */
 	
     num = RED_Q_Q(num);
@@ -16,6 +19,40 @@ std::ostream& operator<< (std::ostream &stream, BigFra num){
 
     return stream;
 }
+
+std::istream& operator>> (std::istream &stream, BigFra &num){
+	/* Function read number from stream */
+	
+	std::string numer, denom;
+	stream >> numer >> denom;
+	
+	num = BigFra(numer, denom);
+	
+	return stream;
+}
+
+std::string BigFra::to_float(int precision){
+	/* Return float representation (as string) with set precision */
+	
+	std::stringstream ss;
+	
+	BigFra temp = *this;
+	
+	// Integer part
+	ss << (temp.numerator / temp.denominator) << ".";
+	temp.numerator = temp.numerator % temp.denominator;
+	
+	// Float part
+	for(int i = 0; i < precision; i++){
+		ss << (temp.numerator * BigInt("10"))  / temp.denominator;
+		temp.numerator = (temp.numerator * BigInt("10")) % temp.denominator;
+	}
+	
+	std::string result;
+	ss >> result;
+	
+	return result;
+};
 
 bool INT_Q_B(BigFra lhs) {
     /* Checks if fraction is integer */
@@ -35,6 +72,7 @@ BigInt TRANS_Q_Z(BigFra lhs) {
     if(INT_Q_B(lhs) == true){
         return lhs.numerator / lhs.denominator;
     }
+    
     return BigInt("-0");
 }
 
@@ -94,9 +132,12 @@ BigFra SUB_QQ_Q(BigFra lhs, BigFra rhs) {
 }
 
 void BigFra::normalise(){
-    int isNegative1 = POZ_Z_D(numerator);
-    int isNegative2 = POZ_Z_D(denominator);
-    if(isNegative1 == isNegative2){
+	/* Makes numerator signed */
+	
+    int num_sign = POZ_Z_D(numerator);
+    int denom_sign = POZ_Z_D(denominator);
+    
+    if(num_sign == denom_sign){
         numerator = BigInt(numerator, false);
         denominator = BigInt(denominator, false);
     }else{
@@ -122,4 +163,37 @@ BigFra BigFra::operator*(const BigFra &rhs){
 BigFra BigFra::operator/(const BigFra &rhs){
     return DIV_QQ_Q(*this, rhs);
 }
+
+bool BigFra::operator<(const BigFra &rhs){
+	BigFra sub = *this - rhs;
+	sub.normalise();
+	
+	return (sub.numerator < BigInt("0"));
+};
+
+bool BigFra::operator>(const BigFra &rhs){
+	BigFra sub = *this - rhs;
+	sub.normalise();
+	
+	return sub.numerator > BigInt("0");
+};
+
+bool BigFra::operator==(const BigFra &rhs){
+	BigFra sub = *this - rhs;
+	sub.normalise();
+	
+	return sub.numerator == BigInt("0");
+};
+
+bool BigFra::operator<=(const BigFra &rhs){
+	return (*this < rhs) || (*this == rhs);
+};
+
+bool BigFra::operator>=(const BigFra &rhs){
+	return (*this > rhs) || (*this == rhs);
+};
+
+bool BigFra::operator!=(const BigFra &rhs){
+	return !(*this == rhs);
+};
 

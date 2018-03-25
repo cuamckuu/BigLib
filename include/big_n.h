@@ -16,6 +16,7 @@ protected:
 
 public:
 	friend std::ostream& operator<< (std::ostream &stream, const BigNat &num);
+	friend std::istream& operator>> (std::istream &stream, BigNat &num);
 	
 	//=====MODULES=====
 	//Author: Alex Kosh 7301
