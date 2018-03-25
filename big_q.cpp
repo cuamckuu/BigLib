@@ -31,7 +31,7 @@ BigInt TRANS_Q_Z(BigFra lhs) {
 	/* If possible, transform fraction to integer returns result, else returns minus zero*/
 	
     if(INT_Q_B(lhs) == true){
-        return lhs.numerator / lhs.denumenator;
+        return lhs.numerator / lhs.denominator;
     }
     return BigInt("-0");
 }

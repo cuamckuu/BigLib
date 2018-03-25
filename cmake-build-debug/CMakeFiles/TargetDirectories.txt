@@ -1,0 +1,3 @@
+C:/Users/bahio/Documents/GitHub/BigLib/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/bahio/Documents/GitHub/BigLib/cmake-build-debug/CMakeFiles/BigLib.dir
+C:/Users/bahio/Documents/GitHub/BigLib/cmake-build-debug/CMakeFiles/rebuild_cache.dir

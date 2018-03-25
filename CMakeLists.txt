@@ -3,4 +3,4 @@ project(BigLib)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(BigLib main.cpp big_n.cpp big_q.cpp big_z.cpp include)
+add_executable(BigLib main.cpp big_n.cpp big_q.cpp big_z.cpp big_p.cpp include)

@@ -13,7 +13,7 @@ public:
 	//=====MODULES=====
 	//Author: Demid Tremp 7301
 
-    friend bool INT_Q_B(BigInt lhs, BigInt rhs);
+    friend bool INT_Q_B(BigFra lhs);
 	friend BigFra TRANS_Z_Q(BigInt lhs);
 	friend BigInt TRANS_Q_Z(BigFra lhs);
     friend BigFra MUL_QQ_Q(BigFra lhs, BigFra rhs);
