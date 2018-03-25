@@ -3,16 +3,12 @@
 
 std::ostream& operator<<(std::ostream &stream, const BigPol &pol){
     for (int i = pol.coefs.size() - 1; i >= 0; --i) {
-        stream << pol.coefs[i];
+        stream << pol.coefs[i] << ' ';
     }
-
     return stream;
 }
 
 BigPol::BigPol(std::string str) {
-    /* Initializer. Takes string representation of big num */
-
-    //Get digits from string and add to vector
     int size;
     for (int i = str.length() - 1; i >= 0; i-=(size + 2)){
 
@@ -61,6 +57,19 @@ BigPol SUB_PP_P(BigPol lhs, BigPol rhs) {
     return ADD_PP_P(lhs, rhs);
 }
 
+BigPol MUL_Pxk_P(BigPol lhs, int k) {
+
+    int size = lhs.coefs.size();
+    for (int j = 0; j < k; ++j) {
+        lhs.coefs.push_back(BigFra(BigInt("0"), BigInt("1")));
+    }
+    for (int i = size + k - 1; i >= k; --i) {
+            lhs.coefs[i] = lhs.coefs[i - k];
+            lhs.coefs[i - k] = BigFra(BigInt("0"), BigInt("1"));
+    }
+    return lhs;
+}
+
 BigPol BigPol::operator+(const BigPol &rhs) {
     return ADD_PP_P(*this, rhs);
 }
@@ -72,6 +81,12 @@ BigPol BigPol::operator*(const BigFra &rhs) {
 BigPol BigPol::operator-(const BigPol &rhs) {
     return SUB_PP_P(*this, rhs);
 }
+
+BigPol BigPol::operator*(const int &rhs) {
+    return MUL_Pxk_P(*this, rhs);
+}
+
+
 
 
 
