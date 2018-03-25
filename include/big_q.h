@@ -10,7 +10,7 @@ private:
 	BigInt denominator;
 
 public:
-	friend std::ostream& operator<< (std::ostream &stream, BigFra &num);
+	friend std::ostream& operator<< (std::ostream &stream, BigFra num);
 	friend std::istream& operator>> (std::istream &stream, BigFra &num);
 
 	//=====MODULES=====

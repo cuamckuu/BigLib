@@ -9,7 +9,7 @@ BigFra::BigFra(BigInt numerator, BigInt denominator): numerator(numerator), deno
 	*this = RED_Q_Q(*this);
 }
 
-std::ostream& operator<< (std::ostream &stream, BigFra &num){
+std::ostream& operator<< (std::ostream &stream, BigFra num){
     /* Function prints current number to stream output */
 	
     num = RED_Q_Q(num);
@@ -26,8 +26,10 @@ std::istream& operator>> (std::istream &stream, BigFra &num){
 	std::string numer, denom;
 	stream >> numer >> denom;
 	
-	num = BigFra(numer, denom);
-	
+	if(!(numer == "" || numer == "")){
+		num = BigFra(numer, denom);
+	}
+		
 	return stream;
 }
 
