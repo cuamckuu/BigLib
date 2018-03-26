@@ -5,6 +5,12 @@ CMakeFiles/BigLib.dir/big_n.cpp.obj: ../big_n.cpp
 CMakeFiles/BigLib.dir/big_n.cpp.obj: ../include/big_n.h
 CMakeFiles/BigLib.dir/big_n.cpp.obj: ../include/big_z.h
 
+CMakeFiles/BigLib.dir/big_p.cpp.obj: ../big_p.cpp
+CMakeFiles/BigLib.dir/big_p.cpp.obj: ../include/big_n.h
+CMakeFiles/BigLib.dir/big_p.cpp.obj: ../include/big_p.h
+CMakeFiles/BigLib.dir/big_p.cpp.obj: ../include/big_q.h
+CMakeFiles/BigLib.dir/big_p.cpp.obj: ../include/big_z.h
+
 CMakeFiles/BigLib.dir/big_q.cpp.obj: ../big_q.cpp
 CMakeFiles/BigLib.dir/big_q.cpp.obj: ../include/big_n.h
 CMakeFiles/BigLib.dir/big_q.cpp.obj: ../include/big_q.h

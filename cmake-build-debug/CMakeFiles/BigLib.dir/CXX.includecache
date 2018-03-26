@@ -18,6 +18,10 @@ C:/Users/bahio/Documents/GitHub/BigLib/include/big_n.h
 include/big_z.h
 C:/Users/bahio/Documents/GitHub/BigLib/include/big_z.h
 
+C:/Users/bahio/Documents/GitHub/BigLib/big_p.cpp
+include/big_p.h
+C:/Users/bahio/Documents/GitHub/BigLib/include/big_p.h
+
 C:/Users/bahio/Documents/GitHub/BigLib/big_q.cpp
 include/big_q.h
 C:/Users/bahio/Documents/GitHub/BigLib/include/big_q.h
@@ -37,6 +41,10 @@ vector
 -
 iostream
 -
+
+C:/Users/bahio/Documents/GitHub/BigLib/include/big_p.h
+big_q.h
+C:/Users/bahio/Documents/GitHub/BigLib/include/big_q.h
 
 C:/Users/bahio/Documents/GitHub/BigLib/include/big_q.h
 big_z.h
