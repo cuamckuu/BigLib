@@ -40,6 +40,11 @@ BigPol::BigPol(std::string str) {
 BigPol ADD_PP_P(BigPol lhs, BigPol rhs) {
 	/* Adds lhs to rhs, returns resutl */
 	
+	//STRANGE BEHAVIOUR!!!!
+	if(lhs.coefs.size() > rhs.coefs.size()){
+		std::swap(lhs, rhs);
+	} 
+	
 	BigFra zero = BigFra(BigInt("0"), BigInt("1"));
     int max_len = std::max(lhs.coefs.size(), rhs.coefs.size());
     
