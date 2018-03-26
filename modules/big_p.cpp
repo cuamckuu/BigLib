@@ -4,23 +4,45 @@
 #include "../include/big_p.h"
 
 std::ostream& operator<<(std::ostream &stream, BigPol pol){
-	BigFra zero = BigFra(BigInt("0"), BigInt("1"));
+	BigFra zero = BigFra("0 1");
 	
-	for (int i = pol.coefs.size() - 1; i > 0; --i) {
+	int nextSign = 0;
+	bool wasSign = false;
+	
+	for (int i = pol.coefs.size() - 1; i >= 0; --i) {
     	if(pol.coefs[i] != zero){
-    		stream << pol.coefs[i] << " * x^" << i;
-    		
-    		if(pol.coefs[i-1] > zero){
-    			stream << " + ";
-			}else if(pol.coefs[i-1] < zero){
+    		//Abs coef, for cout
+			BigFra curr = (pol.coefs[i] < zero ? pol.coefs[i] * BigFra("-1 1") : pol.coefs[i]); 
+
+			stream << curr;
+			if(i != 0){
+				std::cout << " * x^" << i;
+			}
+    		wasSign = false;
+		}
+		
+		int j = i;
+		do{
+			j--;
+		}while(j >= 0 && pol.coefs[j] == zero);
+		
+		if(j == -1){
+			nextSign = 0;
+		}else if(pol.coefs[j] > zero){
+			nextSign = 1;
+		}else if(pol.coefs[j] < zero){
+			nextSign = -1;
+		}
+		
+		if(!wasSign && i != 0){
+			if(nextSign == 1 ){
+				stream << " + ";
+			}else if(nextSign == -1){
 				stream << " - ";
 			}
+			wasSign = true;
 		}
     }
-    
-	if(pol.coefs[0] != zero){
-    	stream << pol.coefs[0];
-	}
     
     return stream;
 }
@@ -37,6 +59,28 @@ BigPol::BigPol(std::string str) {
 	std::reverse(coefs.begin(), coefs.end());
 }
 
+
+BigPol MUL_PP_P(BigPol lhs, BigPol rhs){
+	/* Multiply lhs by rhs, returns result */
+	
+    BigPol result = BigPol("0 1");
+	
+    for (int i = 0; i < rhs.coefs.size(); ++i) {
+        //Multiply by coeff and x^i for every x
+		BigPol temp_pol = lhs * rhs.coefs[i];
+		
+		if(i != 0){
+        	temp_pol = MUL_Pxk_P(temp_pol, i);
+		}
+		
+		//std::cout << temp_pol << "\n";
+		result = result + temp_pol;
+		//std::cout << result << "\n";
+    }
+    
+    return result;
+}
+
 BigPol ADD_PP_P(BigPol lhs, BigPol rhs) {
 	/* Adds lhs to rhs, returns resutl */
 	
@@ -45,12 +89,14 @@ BigPol ADD_PP_P(BigPol lhs, BigPol rhs) {
 		std::swap(lhs, rhs);
 	} 
 	
-	BigFra zero = BigFra(BigInt("0"), BigInt("1"));
+	BigFra zero = BigFra("0 1");
     int max_len = std::max(lhs.coefs.size(), rhs.coefs.size());
     
     for(int i = 0; i < max_len; i++){
         if(i < lhs.coefs.size()){
-        	 lhs.coefs[i] = lhs.coefs[i] + (i < rhs.coefs.size() ? rhs.coefs[i] : zero);
+        	//std::cout << lhs.coefs[i] << "asd" << rhs.coefs[i] << "\n";
+        	lhs.coefs[i] = lhs.coefs[i] + (i < rhs.coefs.size() ? rhs.coefs[i] : zero);
+			//std::cout << lhs.coefs[i] << "asd" << rhs.coefs[i] << "\n";
 		}else{
 			lhs.coefs.push_back(rhs.coefs[i]);
 		}
@@ -98,24 +144,6 @@ BigPol MUL_Pxk_P(BigPol lhs, unsigned int k){
     return lhs;
 }
 
-BigPol MUL_PP_P(BigPol lhs, BigPol rhs){
-	/* Multiply lhs by rhs, returns result */
-	
-    BigPol result = BigPol("0 1");
-	
-    for (int i = 0; i < rhs.coefs.size(); ++i) {
-        //Multiply by coeff and x^i for every x
-		BigPol temp_pol = lhs * rhs.coefs[i];
-		
-		if(i != 0){
-        	temp_pol = MUL_Pxk_P(temp_pol, i);
-		}
-		
-		result = result + temp_pol;
-    }
-    
-    return result;
-}
 
 BigFra LED_P_Q(BigPol lhs){
 	/* Returns coef before x with higher power */ 
@@ -138,10 +166,46 @@ BigPol DER_P_P(BigPol lhs) {
     return lhs;
 }
 
-BigNat DEG_P_N(BigPol lhs) {
+int DEG_P_D(BigPol lhs) {
 	/* Returns degree of polynom */
 	
-    return BigNat(std::to_string(lhs.coefs.size()));
+	for(int i = lhs.coefs.size() - 1; i >= 0; i--){
+		if(lhs.coefs[i] != BigFra("0 1")){
+			return i;
+		}
+	}
+	return -1;
+}
+
+BigPol DIV_PP_P(BigPol lhs, BigPol rhs){
+
+    BigPol result("0 1");
+    int lhs_deg = DEG_P_D(lhs);
+    int rhs_deg = DEG_P_D(rhs);
+	
+    while(lhs_deg >= rhs_deg && lhs.coefs[lhs_deg] != BigFra("0 1")){
+        int k = lhs_deg - rhs_deg;
+		
+		BigFra coef = lhs.coefs[lhs_deg] / rhs.coefs[rhs_deg];
+        
+		BigPol temp = BigPol("1 1") * coef;
+        
+        if(k > 0){
+        	temp = MUL_Pxk_P(temp, k);	
+		}
+		
+        BigPol toSub = MUL_PP_P(rhs, temp);
+        //std::cout << lhs << " - " << toSub << "\n";
+        
+		lhs = lhs - toSub;
+		
+        result = result + temp;
+    	
+    	lhs_deg = DEG_P_D(lhs);
+    	rhs_deg = DEG_P_D(rhs);
+	}
+
+    return result;
 }
 
 BigPol BigPol::operator+(const BigPol &rhs) {
@@ -150,6 +214,10 @@ BigPol BigPol::operator+(const BigPol &rhs) {
 
 BigPol BigPol::operator*(const BigFra &rhs) {
     return MUL_PQ_P(*this, rhs);
+}
+
+BigPol BigPol::operator/(const BigPol &rhs) {
+    return DIV_PP_P(*this, rhs);
 }
 
 BigPol BigPol::operator-(const BigPol &rhs) {
