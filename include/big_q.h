@@ -43,6 +43,7 @@ public:
 	//===================
 	BigFra();
 	BigFra(BigInt numenator, BigInt denuminator);
+	BigFra(std::string str);
 	void normalise();
 	std::string to_float(int precision);
 };

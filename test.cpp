@@ -1,10 +1,15 @@
+#include <assert.h>
 #include "include/big_n.h"
 #include "include/big_z.h"
 #include "include/big_p.h"
 
 template<class T>
 bool check(T expectation, T reality){
-    return expectation == reality;
+	bool result = (expectation == reality);
+	if(result == false){
+		std::cout << expectation << " != " << reality << "\n";
+	}	
+    return result;
 }
 
 bool testNat(){
@@ -31,7 +36,7 @@ bool testNat(){
 }
 
 bool testInt(){
-    BigInt zero("0"), one("1"), a("145"), b("-45"), minusOne("-1"), minusA("145"), minusB("45");
+    BigInt zero("0"), one("1"), a("145"), b("-45"), minusOne("-1"), minusA("-145"), minusB("45");
 
     bool isOK = true;
 
@@ -64,7 +69,7 @@ bool testFra(){
 
     isOK &= check<BigFra>(a + b, BigFra("95 1"));
     isOK &= check<BigFra>(a - b, BigFra("50 1"));
-    isOK &= check<BigFra>(a / b, BigFra("3 1"));
+    isOK &= check<BigFra>(a / b, BigFra("29 9"));
     isOK &= check<BigFra>(a * b, BigFra("6525 4"));
 
     isOK &= check<BigFra>(a + zero, a);
@@ -107,9 +112,9 @@ bool testPol(){
     return isOK;
 }*/
 
-void testAll(){
-    std::cout << "Naturals test: " << testNat();
-    std::cout << "Integers test: " << testInt();
-    std::cout << "Fractions test: " << testFra();
+void test_all(){
+    std::cout << "Naturals test: " << testNat() << "\n";
+    std::cout << "Integers test: " << testInt() << "\n";
+    std::cout << "Fractions test: " << testFra() << "\n";
     //std::cout << "Polynomial test: " << testPol();
 }

@@ -5,6 +5,13 @@
 BigFra::BigFra(): numerator("0"), denominator("1")  {
 }
 
+BigFra::BigFra(std::string str){
+	/* Initializer from string */
+	
+	std::stringstream ss(str);
+	ss >> numerator >> denominator;
+}
+
 BigFra::BigFra(BigInt numerator, BigInt denominator): numerator(numerator), denominator(denominator)  {
 	*this = RED_Q_Q(*this);
 }
