@@ -11,7 +11,6 @@ class View(QWidget):
 		
 		uic.loadUi('form.ui', self)
 	
-
 		#Natural Tab
 		self.natNum1.textChanged.connect(self.get_nat_input)
 		self.natNum2.textChanged.connect(self.get_nat_input)
@@ -116,6 +115,7 @@ class View(QWidget):
 		pol2 = self.pol_to_api(pol2)
 
 		if(pol1 and pol2):
+			print(["DM.exe", "P", pol1, op, pol2])
 			result = subprocess.run(["DM.exe", "P", pol1, op, pol2], stdout=subprocess.PIPE)
 			result = result.stdout.decode("utf-8")
 			self.polResult.setText(result)

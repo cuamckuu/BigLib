@@ -52,7 +52,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -173,16 +173,6 @@
            <item>
             <property name="text">
              <string>GCD</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>LCM</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>POW</string>
             </property>
            </item>
            <item>
@@ -365,27 +355,7 @@
            </item>
            <item>
             <property name="text">
-             <string>GCD</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>LCM</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
              <string>POW</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>FAC</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>FIB</string>
             </property>
            </item>
           </widget>
@@ -874,27 +844,17 @@
            </item>
            <item>
             <property name="text">
-             <string>GCD</string>
+             <string>LED</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>LCM</string>
+             <string>DER</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>POW</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>FAC</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>FIB</string>
+             <string>DEG</string>
             </property>
            </item>
           </widget>

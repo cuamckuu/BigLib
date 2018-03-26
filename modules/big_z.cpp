@@ -119,11 +119,11 @@ BigInt ADD_ZZ_Z(BigInt lhs, BigInt rhs){
 		}
 		
 	}else{
-		//If signs are different, make lhs positive and rhs negative
-		if(left == Sign(negative) && right == Sign(positive)){
+		//If signs are different, make lhs positive or and rhs negative
+		if((left == Sign(negative) || left == Sign(zero)) && (right == Sign(positive) || right == Sign(zero))){
 			std::swap(lhs, rhs);
 		}
-		//Now left == Sign(positive) and right == Sign(negative)))
+		//Now left == Sign(positive or zero) and right == Sign(negative or zero)))
 		
 		CompareNat cmp = CompareNat(COM_NN_D(lhs, rhs));
 
@@ -167,7 +167,7 @@ BigInt MUL_ZZ_Z(BigInt lhs, BigInt rhs){
 		result = -result;
 	}
 	
-	if(right == Sign(negative)){
+	if(right == Sign(negative) && !(left == Sign(zero))){
 		result = -result;
 	}		
 	

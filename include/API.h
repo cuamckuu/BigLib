@@ -21,6 +21,16 @@ void result_int_nat(T a, std::string op, T b){
 		std::cout << a / b;
 	}else if(op == "%"){
 		std::cout << a % b;
+	}else if(op == "GCD"){
+		std::cout << GCD_NN_N(a, b);	
+	}else if(op == "LCM"){
+		std::cout << LCM_NN_N(a, b);
+	}else if(op == "POW"){
+		//std::cout << POW_ZZ_Z(a, b);
+	}else if(op == "FAC"){
+		std::cout << FACTOR_N_N(a);
+	}else if(op == "FIB"){
+		std::cout << FIB_N_N(a);
 	}
 }
 
@@ -48,6 +58,14 @@ void result_pol(BigPol a, std::string op, BigPol b){
 		std::cout << a - b;
 	}else if(op == "*"){
 		std::cout << a * b;
+	}else if(op == "/"){
+		std::cout << a / b;
+	}else if(op == "LED"){
+		std::cout << LED_P_Q(a);
+	}else if(op == "DER"){
+		std::cout << DER_P_P(a);
+	}else if(op == "DEG"){
+		std::cout << DEG_P_D(a);
 	}
 }
 
@@ -118,7 +136,7 @@ int parse_args(int argc, char *argv[]){
 		
 		std::string temp;
 		while(ss >> temp){
-			if(temp == "+" || temp == "-" || temp == "*"){
+			if(temp == "+" || temp == "-" || temp == "*" || temp == "/"){
 				op = temp;
 				break;
 			}

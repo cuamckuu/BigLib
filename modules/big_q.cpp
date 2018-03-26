@@ -20,7 +20,6 @@ std::ostream& operator<< (std::ostream &stream, BigFra num){
     /* Function prints current number to stream output */
 	
     num = RED_Q_Q(num);
-    num.normalise();
     
     stream << num.numerator << "/" << num.denominator;
 
@@ -102,21 +101,20 @@ BigFra DIV_QQ_Q(BigFra lhs, BigFra rhs) {
     lhs.numerator = lhs.numerator * rhs.denominator;
     rhs.denominator = lhs.denominator * rhs.numerator;
 	
-
     return RED_Q_Q(BigFra(lhs.numerator,rhs.denominator));
 }
 
 BigFra RED_Q_Q(BigFra lhs) {
 	/* Makes fraction irrreducable, returns new fraction */
-	
-    BigFra temp = lhs;
 
-    BigInt gcd = BigInt(GCD_NN_N(temp.numerator, temp.denominator), false);
+    lhs.normalise();
 
-    temp.numerator = temp.numerator / gcd;
-    temp.denominator = temp.denominator / gcd;
+    BigInt gcd = BigInt(GCD_NN_N(lhs.numerator, lhs.denominator), false);
 
-    return temp;
+    lhs.numerator = lhs.numerator / gcd;
+    lhs.denominator = lhs.denominator / gcd;
+
+    return lhs;
 }
 
 BigFra ADD_QQ_Q(BigFra lhs, BigFra rhs) {
@@ -126,7 +124,7 @@ BigFra ADD_QQ_Q(BigFra lhs, BigFra rhs) {
 
     lhs.numerator = lhs.numerator * rhs.denominator;
     rhs.numerator = rhs.numerator * lhs.denominator;
-
+	
     BigFra temp(lhs.numerator + rhs.numerator, lcm);
 
     return RED_Q_Q(temp);
@@ -146,7 +144,7 @@ void BigFra::normalise(){
     int num_sign = POZ_Z_D(numerator);
     int denom_sign = POZ_Z_D(denominator);
     
-    if(num_sign == denom_sign){
+    if(num_sign == denom_sign || num_sign == Sign(zero)){
         numerator = BigInt(numerator, false);
         denominator = BigInt(denominator, false);
     }else{
@@ -184,7 +182,7 @@ bool BigFra::operator>(const BigFra &rhs){
 	BigFra sub = *this - rhs;
 	sub.normalise();
 	
-	return sub.numerator > BigInt("0");
+	return (sub.numerator > BigInt("0"));
 };
 
 bool BigFra::operator==(const BigFra &rhs){
