@@ -52,6 +52,7 @@ class View(QWidget):
 		op = self.intOperatorBox.currentText()
 		
 		if(num1 and op and num2):
+			print(["DM.exe", "I", num1, op, num2])
 			result = subprocess.run(["DM.exe", "I", num1, op, num2], stdout=subprocess.PIPE)
 			result = result.stdout.decode("utf-8")
 			self.intResult.setText(result)

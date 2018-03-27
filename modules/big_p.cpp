@@ -13,9 +13,13 @@ std::ostream& operator<<(std::ostream &stream, BigPol pol){
 	for (int i = pol.coefs.size() - 1; i >= 0; --i) {
     	if(pol.coefs[i] != zero){
     		//Abs coef, for cout
-			BigFra curr = (pol.coefs[i] < zero ? pol.coefs[i] * BigFra("-1 1") : pol.coefs[i]); 
-
-			stream << curr;
+    		if(i == pol.coefs.size() - 1){
+    			stream << pol.coefs[i];
+			}else{
+				BigFra curr = (pol.coefs[i] < zero ? pol.coefs[i] * BigFra("-1 1") : pol.coefs[i]); 
+				stream << curr;	
+			}
+			
 			if(i != 0){
 				std::cout << " * x^" << i;
 			}
@@ -67,6 +71,19 @@ BigPol::BigPol(std::string str) {
 	std::reverse(coefs.begin(), coefs.end());
 }
 
+BigPol GCD_PP_P(BigPol lhs, BigPol rhs) {
+    while(DEG_P_D(lhs) >= DEG_P_D(rhs)){
+        lhs = lhs % rhs;
+        std::swap(lhs, rhs);
+
+        if(DEG_P_D(rhs) == -1 && rhs.coefs[0] == BigFra("0 1")){
+        	break;
+		}
+    }
+   
+   	BigFra reversed_fac = BigFra("1 1") / FAC_P_Q(lhs);
+    return lhs * reversed_fac;
+}
 
 BigPol MUL_PP_P(BigPol lhs, BigPol rhs){
 	/* Multiply lhs by rhs, returns result */
@@ -140,7 +157,7 @@ BigPol MUL_PQ_P(BigPol lhs, BigFra rhs) {
 BigPol SUB_PP_P(BigPol lhs, BigPol rhs) {
 	/* Substract rhs from lhs, returns result */
 	
-    BigFra minus_one(BigInt("-1"), BigInt("1"));
+    BigFra minus_one("-1 1");
     rhs = rhs * minus_one;
     
     return ADD_PP_P(lhs, rhs);
@@ -198,6 +215,11 @@ int DEG_P_D(BigPol lhs) {
 	return -1;
 }
 
+
+BigFra FAC_P_Q(BigPol lhs) {
+    return GCD_VecQ_Q(lhs.coefs);
+}
+
 BigPol DIV_PP_P(BigPol lhs, BigPol rhs){
 
     BigPol result("0 1");
@@ -229,25 +251,10 @@ BigPol DIV_PP_P(BigPol lhs, BigPol rhs){
     return result;
 }
 
-BigPol GCD_PP_P(BigPol lhs, BigPol rhs) {
-
-    while(DEG_P_D(lhs) != -1 && DEG_P_D(rhs) != -1){
-
-        if(DEG_P_D(lhs) < DEG_P_D(rhs)){
-            std::swap(lhs, rhs);
-        }
-        if(DEG_P_D(lhs) == DEG_P_D(rhs) && LED_P_Q(lhs) < LED_P_Q(rhs)){
-            std::swap(lhs, rhs);
-        }
-
-        lhs = lhs % rhs;
-//        std::cout << lhs << "\n";
-//        std::cout << rhs << "\n";
-        std::swap(lhs, rhs);
-
-        //std::cout << DEG_P_D(rhs) << " " << rhs.coefs[0];
-    }
-    return lhs;
+BigPol NMR_P_P(BigPol lhs) {
+	BigPol minus_one("-1 1");
+	BigPol gcd = minus_one * GCD_PP_P(lhs, DER_P_P(lhs));
+    return lhs / gcd;
 }
 
 BigPol BigPol::operator+(const BigPol &rhs) {
@@ -273,5 +280,3 @@ BigPol BigPol::operator*(const BigPol &rhs) {
 BigPol BigPol::operator%(const BigPol &rhs) {
     return MOD_PP_P(*this, rhs);
 }
-
-

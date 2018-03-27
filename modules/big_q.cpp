@@ -62,6 +62,27 @@ std::string BigFra::to_float(int precision){
 	return result;
 };
 
+BigFra GCD_VecQ_Q(std::vector<BigFra> elem){
+	
+    if(elem.size() == 1){
+        return elem[0];
+    } else {
+        BigNat res2(LCM_NN_N(elem[0].denominator, elem[1].denominator));
+        BigNat res1(GCD_NN_N(elem[0].numerator, elem[1].numerator));
+        int i = 2;
+
+        //std::cout << "res 1 and 2: " << res1 << "    " << res2 << std::endl;
+
+        while (i < elem.size()){
+            res1 = (GCD_NN_N(res1, elem[i].numerator));
+            res2 = (LCM_NN_N(res2, elem[i].denominator));
+            i++;
+        }
+        return BigFra(BigInt(res1, false), BigInt(res2, false));
+    }
+};
+
+
 bool INT_Q_B(BigFra lhs) {
     /* Checks if fraction is integer */
 	if(lhs.denominator == BigInt("1")){

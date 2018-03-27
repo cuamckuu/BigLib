@@ -7,10 +7,27 @@
 
 void test_all();
 
+BigInt POW_ZZ_Z(BigInt, BigInt);
+
 namespace API{
 	
-template<class T>
-void result_int_nat(T a, std::string op, T b){
+void result_int(BigInt a, std::string op, BigInt b){
+	if(op == "+"){
+		std::cout << a + b;	
+	}else if(op == "-"){
+		std::cout << a - b;
+	}else if(op == "*"){
+		std::cout << a * b;
+	}else if(op == "/"){
+		std::cout << a / b;
+	}else if(op == "%"){
+		std::cout << a % b;
+	}else if(op == "POW"){
+		std::cout << POW_ZZ_Z(a, b);
+	}
+}
+
+void result_nat(BigNat a, std::string op, BigNat b){
 	if(op == "+"){
 		std::cout << a + b;	
 	}else if(op == "-"){
@@ -25,14 +42,14 @@ void result_int_nat(T a, std::string op, T b){
 		std::cout << GCD_NN_N(a, b);	
 	}else if(op == "LCM"){
 		std::cout << LCM_NN_N(a, b);
-	}else if(op == "POW"){
-		//std::cout << POW_ZZ_Z(a, b);
 	}else if(op == "FAC"){
 		std::cout << FACTOR_N_N(a);
 	}else if(op == "FIB"){
 		std::cout << FIB_N_N(a);
 	}
 }
+
+
 
 void result_fra(BigFra a, std::string op, BigFra b){
 	BigFra result;
@@ -69,7 +86,9 @@ void result_pol(BigPol a, std::string op, BigPol b){
 	}else if(op == "DEG"){
 		std::cout << DEG_P_D(a);
 	}else if(op == "GCD"){
-		std::cout << DEG_P_D(a);
+		std::cout << GCD_PP_P(a, b);
+	}else if(op == "NMR"){
+		std::cout << NMR_P_P(a);
 	}
 }
 
@@ -102,13 +121,13 @@ int parse_args(int argc, char *argv[]){
 		if(type == "N"){
 	
 			BigNat a(num1), b(num2);
-			result_int_nat(a, op, b);
+			result_nat(a, op, b);
 		
 		}else if(type == "I"){
 			
 			BigInt a(num1), b(num2);
 			
-			result_int_nat(a, op, b);
+			result_int(a, op, b);
 			
 		}
 		
@@ -141,7 +160,7 @@ int parse_args(int argc, char *argv[]){
 		std::string temp;
 		while(ss >> temp){
 			if(temp == "+" || temp == "-" || temp == "*" || temp == "/" || temp == "%" || temp == "LED"
-			|| temp == "DER" || temp == "DEG" || temp == "GCD"){
+			|| temp == "DER" || temp == "DEG" || temp == "GCD" || temp == "NMR"){
 				op = temp;
 				break;
 			}

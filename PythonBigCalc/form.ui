@@ -854,6 +854,11 @@
            </item>
            <item>
             <property name="text">
+             <string>NMR</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
              <string>DER</string>
             </property>
            </item>

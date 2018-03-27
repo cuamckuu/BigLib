@@ -3,6 +3,8 @@
 #ifndef BIG_Q_H
 #define BIG_Q_H
 
+class BigPol;
+
 class BigFra{
 	
 private:
@@ -21,12 +23,15 @@ public:
 	friend BigInt TRANS_Q_Z(BigFra lhs);
     friend BigFra MUL_QQ_Q(BigFra lhs, BigFra rhs);
     friend BigFra DIV_QQ_Q(BigFra lhs, BigFra rhs);
-
+    
 	//Author: Stepan Fed
 	friend BigFra RED_Q_Q(BigFra lhs);
 	friend BigFra ADD_QQ_Q(BigFra lhs, BigFra rhs);
 	friend BigFra SUB_QQ_Q(BigFra lhs, BigFra rhs);
 	
+
+	//Author: Alex Kosh + Demith Tremp = <3
+	friend BigFra GCD_VecQ_Q(std::vector<BigFra> coefs);
 
 	//======Operators support======
     BigFra operator+(const BigFra &rhs);

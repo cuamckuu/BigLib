@@ -22,8 +22,12 @@ public:
 	//Author: Demid Trem
 	friend BigFra LED_P_Q(BigPol lhs);
 	friend BigPol DER_P_P(BigPol lhs);
-	friend BigFra FAC_P_Q(BigPol lhs);
 	friend int DEG_P_D(BigPol lhs);
+	friend BigPol NMR_P_P(BigPol lhs);
+	
+	
+	friend BigFra FAC_P_Q(BigPol lhs);
+	
 	
 	//=====MODULES=====
 	//Author: Alex Kosh
