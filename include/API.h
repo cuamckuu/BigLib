@@ -60,11 +60,15 @@ void result_pol(BigPol a, std::string op, BigPol b){
 		std::cout << a * b;
 	}else if(op == "/"){
 		std::cout << a / b;
+	}else if(op == "%"){
+		std::cout << a % b;
 	}else if(op == "LED"){
 		std::cout << LED_P_Q(a);
 	}else if(op == "DER"){
 		std::cout << DER_P_P(a);
 	}else if(op == "DEG"){
+		std::cout << DEG_P_D(a);
+	}else if(op == "GCD"){
 		std::cout << DEG_P_D(a);
 	}
 }
@@ -136,7 +140,8 @@ int parse_args(int argc, char *argv[]){
 		
 		std::string temp;
 		while(ss >> temp){
-			if(temp == "+" || temp == "-" || temp == "*" || temp == "/"){
+			if(temp == "+" || temp == "-" || temp == "*" || temp == "/" || temp == "%" || temp == "LED"
+			|| temp == "DER" || temp == "DEG" || temp == "GCD"){
 				op = temp;
 				break;
 			}

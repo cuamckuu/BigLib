@@ -8,6 +8,7 @@ std::ostream& operator<<(std::ostream &stream, BigPol pol){
 	
 	int nextSign = 0;
 	bool wasSign = false;
+	bool wasSmth = false;
 	
 	for (int i = pol.coefs.size() - 1; i >= 0; --i) {
     	if(pol.coefs[i] != zero){
@@ -19,8 +20,10 @@ std::ostream& operator<<(std::ostream &stream, BigPol pol){
 				std::cout << " * x^" << i;
 			}
     		wasSign = false;
+    		wasSmth = true;
 		}
 		
+		//Find next sign
 		int j = i;
 		do{
 			j--;
@@ -34,7 +37,8 @@ std::ostream& operator<<(std::ostream &stream, BigPol pol){
 			nextSign = -1;
 		}
 		
-		if(!wasSign && i != 0){
+		//Output sign
+		if(wasSmth && !wasSign && i != 0){
 			if(nextSign == 1 ){
 				stream << " + ";
 			}else if(nextSign == -1){
@@ -43,6 +47,10 @@ std::ostream& operator<<(std::ostream &stream, BigPol pol){
 			wasSign = true;
 		}
     }
+    
+    if(!wasSmth){
+    	stream << "0/1";
+	}
     
     return stream;
 }
@@ -73,12 +81,26 @@ BigPol MUL_PP_P(BigPol lhs, BigPol rhs){
         	temp_pol = MUL_Pxk_P(temp_pol, i);
 		}
 		
-		//std::cout << temp_pol << "\n";
 		result = result + temp_pol;
-		//std::cout << result << "\n";
     }
     
     return result;
+}
+
+BigPol MOD_PP_P(BigPol lhs, BigPol rhs){
+	/* Returns (lhs mod rhs) */
+	
+	
+	BigPol temp = lhs / rhs;
+	//std::cout << lhs << " - " << temp << "\n";
+	if(DEG_P_D(lhs) == 0 && DEG_P_D(rhs) == 0){
+		temp.coefs[0] = temp.coefs[0].intPart();
+	}
+	//std::cout << lhs << " - " << temp << "\n";
+	temp = temp * rhs;
+	//std::cout << lhs << " - " << temp << "\n";
+	
+	return (lhs - temp);
 }
 
 BigPol ADD_PP_P(BigPol lhs, BigPol rhs) {
@@ -143,7 +165,6 @@ BigPol MUL_Pxk_P(BigPol lhs, unsigned int k){
     
     return lhs;
 }
-
 
 BigFra LED_P_Q(BigPol lhs){
 	/* Returns coef before x with higher power */ 
@@ -226,4 +247,8 @@ BigPol BigPol::operator-(const BigPol &rhs) {
 
 BigPol BigPol::operator*(const BigPol &rhs) {
     return MUL_PP_P(*this, rhs);
+}
+
+BigPol BigPol::operator%(const BigPol &rhs) {
+    return MOD_PP_P(*this, rhs);
 }

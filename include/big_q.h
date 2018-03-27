@@ -26,6 +26,7 @@ public:
 	friend BigFra RED_Q_Q(BigFra lhs);
 	friend BigFra ADD_QQ_Q(BigFra lhs, BigFra rhs);
 	friend BigFra SUB_QQ_Q(BigFra lhs, BigFra rhs);
+	
 
 	//======Operators support======
     BigFra operator+(const BigFra &rhs);
@@ -45,6 +46,7 @@ public:
 	BigFra(BigInt numenator, BigInt denuminator);
 	BigFra(std::string str);
 	void normalise();
+	BigFra intPart();
 	std::string to_float(int precision);
 };
 

@@ -16,6 +16,7 @@ public:
     friend BigPol MUL_Pxk_P(BigPol lhs, unsigned int k);
     friend BigPol MUL_PP_P(BigPol lhs, BigPol rhs);
     friend BigPol DIV_PP_P(BigPol lhs, BigPol rhs);
+    friend BigPol GCD_PP_P(BigPol lhs, BigPol rhs);
     
     //=====MODULES=====
 	//Author: Demid Trem
@@ -23,6 +24,12 @@ public:
 	friend BigPol DER_P_P(BigPol lhs);
 	friend BigFra FAC_P_Q(BigPol lhs);
 	friend int DEG_P_D(BigPol lhs);
+	
+	//=====MODULES=====
+	//Author: Alex Kosh
+	
+	friend BigPol MOD_PP_P(BigPol lhs, BigPol rhs);
+	
 	
 	//======================
 	
