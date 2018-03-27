@@ -168,7 +168,7 @@ BigPol MUL_Pxk_P(BigPol lhs, unsigned int k){
 
 BigFra LED_P_Q(BigPol lhs){
 	/* Returns coef before x with higher power */ 
-    return (lhs.coefs[lhs.coefs.size()]);
+    return (lhs.coefs[DEG_P_D(lhs)]);
 }
 
 BigPol DER_P_P(BigPol lhs) {
@@ -229,6 +229,27 @@ BigPol DIV_PP_P(BigPol lhs, BigPol rhs){
     return result;
 }
 
+BigPol GCD_PP_P(BigPol lhs, BigPol rhs) {
+
+    while(DEG_P_D(lhs) != -1 && DEG_P_D(rhs) != -1){
+
+        if(DEG_P_D(lhs) < DEG_P_D(rhs)){
+            std::swap(lhs, rhs);
+        }
+        if(DEG_P_D(lhs) == DEG_P_D(rhs) && LED_P_Q(lhs) < LED_P_Q(rhs)){
+            std::swap(lhs, rhs);
+        }
+
+        lhs = lhs % rhs;
+//        std::cout << lhs << "\n";
+//        std::cout << rhs << "\n";
+        std::swap(lhs, rhs);
+
+        //std::cout << DEG_P_D(rhs) << " " << rhs.coefs[0];
+    }
+    return lhs;
+}
+
 BigPol BigPol::operator+(const BigPol &rhs) {
     return ADD_PP_P(*this, rhs);
 }
@@ -252,3 +273,5 @@ BigPol BigPol::operator*(const BigPol &rhs) {
 BigPol BigPol::operator%(const BigPol &rhs) {
     return MOD_PP_P(*this, rhs);
 }
+
+
