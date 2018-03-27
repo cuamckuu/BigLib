@@ -64,8 +64,9 @@ std::string BigFra::to_float(int precision){
 
 bool INT_Q_B(BigFra lhs) {
     /* Checks if fraction is integer */
-
-    return (lhs.numerator % lhs.denominator == BigInt("0"));
+	if(lhs.denominator == BigInt("1")){
+		return true;
+	}
 }
 
 BigFra TRANS_Z_Q(BigInt lhs) {
@@ -78,10 +79,13 @@ BigInt TRANS_Q_Z(BigFra lhs) {
 	/* If possible, transform fraction to integer returns result, else returns minus zero*/
 	
     if(INT_Q_B(lhs) == true){
-        return lhs.numerator / lhs.denominator;
+        return lhs.numerator;
     }
-    
-    return BigInt("-0");
+    return lhs.numerator / lhs.denominator;
+}
+
+BigFra BigFra::intPart(){
+	return BigFra(numerator / denominator, BigInt("1")); 
 }
 
 BigFra MUL_QQ_Q(BigFra lhs, BigFra rhs) {
