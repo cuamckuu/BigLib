@@ -30,14 +30,6 @@ BigNat::BigNat(BigInt num){
 	remove_leading_zeros();
 }
 
-void BigNat::remove_leading_zeros(){
-	/* Remove zeros from begining */
-	
-	while (digits.size() > 1 && digits.back() == 0){
-		digits.pop_back();
-	}
-}
-
 std::ostream& operator<< (std::ostream &stream, const BigNat &num){
 	/* Function prints current number to stream output */
 	
@@ -98,107 +90,95 @@ bool NZER_N_B(BigNat lhs){
 BigNat ADD_1N_N(BigNat lhs){
 	/* Adds one to lhs, returns result */
 	
-	//Result is copy of current num
-	BigNat result = lhs;
-	
 	int carry = 0;
-	int max_len = result.digits.size();
+	int max_len = lhs.digits.size();
 	
 	//Loop while max length isn't reached or there is a carry
 	for(int i = 0; i < max_len || carry; i++){
 	
 		//If max length is reached, but there is still a carry, add new digit initialized with zero
 		if(i == max_len){
-			result.digits.push_back(0);
+			lhs.digits.push_back(0);
 		}	
 		
-		result.digits[i] += carry + (i == 0 ? 1 : 0);
+		lhs.digits[i] += carry + (i == 0 ? 1 : 0);
 		
-		carry = result.digits[i] >= 10;
+		carry = lhs.digits[i] >= 10;
 		
 		if(carry){
-			result.digits[i] -= 10;
+			lhs.digits[i] -= 10;
 		}
 	}
 	
-	return result;
+	return lhs;
 }
 
 BigNat ADD_NN_N(BigNat lhs, BigNat rhs){
 	/* Add two positive BigInt's returns result */
 	
-	//Result is copy of current num
-	BigNat result = lhs;
-	
 	int carry = 0;
-	int max_len = std::max(result.digits.size(), rhs.digits.size());
+	int max_len = std::max(lhs.digits.size(), rhs.digits.size());
 	
 	//Loop while max_len isn't reached or there is a carry
 	for(int i = 0; i < max_len || carry; i++){
 		
 		//If max_len is reached, but there is still a carry, add new digit initialized with zero
-		if(i == result.digits.size()){
-			result.digits.push_back(0);
+		if(i == (int)lhs.digits.size()){
+			lhs.digits.push_back(0);
 		}	
 		
-		result.digits[i] += carry + (i < rhs.digits.size() ? rhs.digits[i] : 0);
+		lhs.digits[i] += carry + (i < (int)rhs.digits.size() ? rhs.digits[i] : 0);
 		
-		carry = result.digits[i] >= 10;
+		carry = lhs.digits[i] >= 10;
 		if(carry){
-			result.digits[i] -= 10;
+			lhs.digits[i] -= 10;
 		}
 	}
 	
-	return result;	
+	return lhs;	
 }
 
 BigNat SUB_NN_N(BigNat lhs, BigNat rhs){
 	/* If possible, substract rhs from lhs, returns result */
 	
-	//Smaller num for result and birrer for toSub
-	BigNat result = lhs;
-	BigNat toSub = rhs;
-	
 	assert(("SUB_NN_N, rhs is bigger", COM_NN_D(lhs, rhs) != CompareNat(rhsIsBigger)));
 	
 	//Substract loop
 	int carry = 0;
-	for(int i = 0; i < toSub.digits.size() || carry; i++){
-		result.digits[i] -= carry + (i < toSub.digits.size() ? toSub.digits[i] : 0);
+	for(int i = 0; i < (int)rhs.digits.size() || carry; i++){
+		lhs.digits[i] -= carry + (i < (int)rhs.digits.size() ? rhs.digits[i] : 0);
 		
-		//If current digit is negative, carry 1 from next and add 10 to current
-		carry = result.digits[i] < 0;
+		//If current digit is negative, carry one from next and add 10 to current
+		carry = lhs.digits[i] < 0;
 		if(carry){
-			result.digits[i] += 10;	
+			lhs.digits[i] += 10;	
 		}  
 	}
 	
-	result.remove_leading_zeros();	
-	return result;	
+	lhs.remove_leading_zeros();	
+	return lhs;	
 }
 
 BigNat MUL_ND_N(BigNat lhs, int multiplier){
 	/* Multiply lhs by natural multiplier, returns result */
 	
-	BigNat result = lhs;	
-	
 	//Multiply loop
 	int carry = 0;
-	for (int i = 0; i < result.digits.size() || carry; i++){
+	for (int i = 0; i < (int)lhs.digits.size() || carry; i++){
 		//If there is carry and digits end, add new digit
-		if (i == result.digits.size()){
-			result.digits.push_back(0);	
+		if (i == (int)lhs.digits.size()){
+			lhs.digits.push_back(0);	
 		}
 		
-		long long cur = carry + result.digits[i] * multiplier * 1ll;
+		long long cur = carry + lhs.digits[i] * multiplier * 1ll;
 		
 		//Current digit is last digit from current, the rest is for carry
-		result.digits[i] = (int)(cur % 10);
+		lhs.digits[i] = (int)(cur % 10);
 		carry = (int)(cur / 10);
 	}
 	
-	result.remove_leading_zeros();
-	return result;
+	lhs.remove_leading_zeros();
+	return lhs;
 };
 
 BigNat MUL_Nk_N(BigNat lhs, int k){
@@ -222,7 +202,7 @@ BigNat MUL_NN_N(BigNat lhs, BigNat rhs){
 	BigNat result("0");
 	
 	//Multiply loop
-	for(int i = 0; i < rhs.digits.size(); i++){
+	for(int i = 0; i < (int)rhs.digits.size(); i++){
 		BigNat temp("0");
 		
 		temp = lhs * rhs.digits[i];
@@ -248,7 +228,7 @@ BigNat SUB_NDN_N(BigNat lhs, int k, BigNat rhs){
 }
 
 BigNat DIV_NN_Dk(BigNat lhs, BigNat rhs){
-	/* Returns first num of lhs/rhs, miltiplied by 10^k */
+	/* Returns first num of lhs / rhs, miltiplied by 10^k */
 	
 	//Order of rhs sshould be less or equal
 	assert(("DIV_NN_Dk rhs.size() > lhs.size()", lhs.digits.size() >= rhs.digits.size()));
@@ -256,21 +236,22 @@ BigNat DIV_NN_Dk(BigNat lhs, BigNat rhs){
 	//Can't divide by zero
 	assert(("DIV_NN_Dk rhs is zero", NZER_N_B(rhs) == 1));
 	
-	
+	//Div loop
 	for(int i = lhs.digits.size() - 1; i >= 0; i--){
 		for(int mul = 9; mul > 0; mul--){
 			BigNat temp("0");
 			temp = rhs * mul;
 			temp = MUL_Nk_N(temp, i);
 			
+			//Substract maximum number, which is still less
 			if(COM_NN_D(lhs, temp) != CompareNat(rhsIsBigger)){
-				//std::cout << lhs << " " << temp << "\n";
 				BigNat result(std::to_string(mul));
 				result = MUL_Nk_N(result, i);
 				return result;				
 			}
 		}
 	}
+	return BigNat("0");	
 }
 
 BigNat DIV_NN_N(BigNat lhs, BigNat rhs){
@@ -299,9 +280,8 @@ BigNat MOD_NN_N(BigNat lhs, BigNat rhs){
 	
 	BigNat temp = lhs / rhs;
 	temp = temp * rhs;
-	BigNat result = lhs - temp;
 	
-	return result;
+	return lhs - temp;
 }
 
 BigNat GCD_NN_N(BigNat lhs, BigNat rhs){
@@ -321,14 +301,14 @@ BigNat LCM_NN_N(BigNat lhs, BigNat rhs){
 	
 	//LCM(A,B) = (A*B) / GCD(A,B)
 	BigNat gcd = GCD_NN_N(lhs, rhs);
-	
-	BigNat result = lhs / gcd * rhs;
 
-	return result;	
+	return (lhs / gcd * rhs);	
 };
 
 //=====Extra modules======
 BigNat FACTOR_N_N(BigNat n){
+	/* Returns n! as BigNat */
+	
 	BigNat result("1");
 	
 	for(BigNat i("1"); i <= n; i++){
@@ -339,6 +319,8 @@ BigNat FACTOR_N_N(BigNat n){
 };
 
 BigNat FIB_N_N(BigNat n){
+	/* Returns N'th Fibonacci number as BigNat */
+	
 	BigNat prev("0");
 	BigNat curr("1");
 	
@@ -350,6 +332,15 @@ BigNat FIB_N_N(BigNat n){
 	
 	return prev;
 };
+
+
+void BigNat::remove_leading_zeros(){
+	/* Remove zeros from begining */
+	
+	while (digits.size() > 1 && digits.back() == 0){
+		digits.pop_back();
+	}
+}
 
 //======OPERATORS===========
 

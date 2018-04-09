@@ -2,7 +2,8 @@
 #include <sstream>
 #include "../include/big_q.h"
 
-BigFra::BigFra(): numerator("0"), denominator("1")  {
+BigFra::BigFra(): numerator("0"), denominator("1") {
+	/* Initializer */
 }
 
 BigFra::BigFra(std::string str){
@@ -13,6 +14,7 @@ BigFra::BigFra(std::string str){
 }
 
 BigFra::BigFra(BigInt numerator, BigInt denominator): numerator(numerator), denominator(denominator)  {
+	/* Initializer from two BigInt */
 	*this = RED_Q_Q(*this);
 }
 
@@ -33,7 +35,7 @@ std::istream& operator>> (std::istream &stream, BigFra &num){
 	stream >> numer >> denom;
 	
 	if(!(numer == "" || numer == "")){
-		num = BigFra(numer, denom);
+		num = BigFra(numer + " " + denom);
 	}
 		
 	return stream;
@@ -62,10 +64,31 @@ std::string BigFra::to_float(int precision){
 	return result;
 };
 
+BigFra GCD_VecQ_Q(std::vector<BigFra> coefs){
+	/* Returns gcd of all numerators / lcm of all denominatorsû */
+	
+    if(coefs.size() == 1){
+        return coefs[0];
+    }else{
+        BigNat denom_lcm(LCM_NN_N(coefs[0].denominator, coefs[1].denominator));
+        BigNat num_gcd(GCD_NN_N(coefs[0].numerator, coefs[1].numerator));
+        
+        for(int i = 2; i < (int)coefs.size(); i++){
+        	num_gcd = (GCD_NN_N(num_gcd, coefs[i].numerator));
+            denom_lcm = (LCM_NN_N(denom_lcm, coefs[i].denominator));
+		}
+		
+        return BigFra(BigInt(num_gcd, false), BigInt(denom_lcm, false));
+    }
+};
+
 bool INT_Q_B(BigFra lhs) {
     /* Checks if fraction is integer */
+    
 	if(lhs.denominator == BigInt("1")){
 		return true;
+	}else{
+		return false;
 	}
 }
 
@@ -76,7 +99,7 @@ BigFra TRANS_Z_Q(BigInt lhs) {
 }
 
 BigInt TRANS_Q_Z(BigFra lhs) {
-	/* If possible, transform fraction to integer returns result, else returns minus zero*/
+	/* Transform fraction to integer returns integer result */
 	
     if(INT_Q_B(lhs) == true){
         return lhs.numerator;
@@ -85,14 +108,15 @@ BigInt TRANS_Q_Z(BigFra lhs) {
 }
 
 BigFra BigFra::intPart(){
+	/* Returns integer part of division as fraction */
 	return BigFra(numerator / denominator, BigInt("1")); 
 }
 
 BigFra MUL_QQ_Q(BigFra lhs, BigFra rhs) {
     /* Miltiply lhs to rhs, returns result */
 
-    lhs.numerator = (MUL_ZZ_Z(lhs.numerator, rhs.numerator));
-    rhs.denominator = (MUL_ZZ_Z(lhs.denominator, rhs.denominator));
+    lhs.numerator = MUL_ZZ_Z(lhs.numerator, rhs.numerator);
+    rhs.denominator = MUL_ZZ_Z(lhs.denominator, rhs.denominator);
     
     return RED_Q_Q(BigFra(lhs.numerator,rhs.denominator));
 }
@@ -100,7 +124,7 @@ BigFra MUL_QQ_Q(BigFra lhs, BigFra rhs) {
 BigFra DIV_QQ_Q(BigFra lhs, BigFra rhs) {
     /* Divede lhs to rhs, returns result */
 	
-	assert(("DIV_QQ_Q rhs is zero", !(rhs.numerator == BigInt("0"))));
+	assert(("DIV_QQ_Q rhs is zero", rhs.numerator != BigInt("0")));
 
     lhs.numerator = lhs.numerator * rhs.denominator;
     rhs.denominator = lhs.denominator * rhs.numerator;
@@ -122,7 +146,7 @@ BigFra RED_Q_Q(BigFra lhs) {
 }
 
 BigFra ADD_QQ_Q(BigFra lhs, BigFra rhs) {
-	/* Substract add rhs to lhs, returns result */
+	/* Adds rhs to lhs, returns result */
 	
     BigInt lcm = lhs.denominator * rhs.denominator;
 
@@ -137,7 +161,7 @@ BigFra ADD_QQ_Q(BigFra lhs, BigFra rhs) {
 BigFra SUB_QQ_Q(BigFra lhs, BigFra rhs) {
     /* Substract rhs from lhs, returns result */
     
-    rhs.numerator = MUL_ZM_Z(rhs.numerator);
+    rhs.numerator = -rhs.numerator;
 
     return ADD_QQ_Q(lhs, rhs);
 }

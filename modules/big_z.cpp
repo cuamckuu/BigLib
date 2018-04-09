@@ -73,11 +73,11 @@ int POZ_Z_D(BigInt lhs){
 	/* Check number's sign */
 	
 	if(NZER_N_B(lhs) == false){
-		return Sign::zero;
+		return Sign(zero);
 	}else if(lhs.isNegative){
-		return Sign::negative;
+		return Sign(negative);
 	}else{
-		return Sign::positive;
+		return Sign(positive);
 	}
 }
 
@@ -119,7 +119,7 @@ BigInt ADD_ZZ_Z(BigInt lhs, BigInt rhs){
 		}
 		
 	}else{
-		//If signs are different, make lhs positive or and rhs negative
+		//If signs are different, make lhs positive or zero and rhs negative or zero
 		if((left == Sign(negative) || left == Sign(zero)) && (right == Sign(positive) || right == Sign(zero))){
 			std::swap(lhs, rhs);
 		}
@@ -127,7 +127,7 @@ BigInt ADD_ZZ_Z(BigInt lhs, BigInt rhs){
 		
 		CompareNat cmp = CompareNat(COM_NN_D(lhs, rhs));
 
-		//Substract from bigger num smaller and care about sign
+		//Substract abs. From bigger num smaller and care about sign
 		if(cmp == CompareNat(lhsIsBigger)){
 			// Usual substract;
 			sum = SUB_NN_N(lhs, rhs);
@@ -139,7 +139,8 @@ BigInt ADD_ZZ_Z(BigInt lhs, BigInt rhs){
 			result = -TRANS_N_Z(sum);
 			
 		}else{
-			//lhs == -rhs 	
+			//lhs == -rhs 
+			//Result == 0, which is already true	
 		}
 	}
 	
@@ -147,6 +148,7 @@ BigInt ADD_ZZ_Z(BigInt lhs, BigInt rhs){
 }
 
 BigInt SUB_ZZ_Z(BigInt lhs, BigInt rhs){
+	/* Substract rhs from lhs */
 	rhs = -rhs;
 	return (lhs + rhs);
 };
@@ -160,14 +162,15 @@ BigInt MUL_ZZ_Z(BigInt lhs, BigInt rhs){
 	
 	//Multiply abs values
 	BigNat mul = MUL_NN_N(lhs, rhs);
-	BigInt result =  TRANS_N_Z(mul);
+	BigInt result = TRANS_N_Z(mul);
 	
 	//Multiply by both signs
 	if(left == Sign(negative)){
 		result = -result;
 	}
 	
-	if(right == Sign(negative) && !(left == Sign(zero))){
+	//Also avoid -zero case
+	if(right == Sign(negative) && left != Sign(zero)){
 		result = -result;
 	}		
 	
@@ -190,7 +193,8 @@ BigInt DIV_ZZ_Z(BigInt lhs, BigInt rhs){
 		result = -result;
 	}
 	
-	if(right == Sign(negative)){
+	//Also avoid -zero case
+	if(right == Sign(negative) && left != Sign(zero)){
 		result = -result;
 	}		
 	
@@ -218,7 +222,7 @@ BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs){
 		rhs = -rhs;
 	}		
 	
-	//If result is negative, add rhs once
+	//If result is negative, then add rhs once
 	if(POZ_Z_D(result) == Sign(negative)){
 		result = result + rhs;
 	}
@@ -242,10 +246,7 @@ BigInt POW_ZZ_Z(BigInt lhs, BigInt rhs){
 	}
 }
 
-
 //======OPERATORS===========
-
-
 BigInt BigInt::operator+(const BigInt &rhs){
 	return ADD_ZZ_Z(*this, rhs);
 };
@@ -280,6 +281,10 @@ bool BigInt::operator>(const BigInt &rhs){
 
 bool BigInt::operator==(const BigInt &rhs){
 	return (BigNat(*this) == BigNat(rhs)) && (POZ_Z_D(*this) == POZ_Z_D(rhs));
+};
+
+bool BigInt::operator!=(const BigInt &rhs){
+	return !(*this == rhs);
 };
 
 bool BigInt::operator<=(const BigInt &rhs){

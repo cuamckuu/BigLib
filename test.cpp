@@ -2,33 +2,34 @@
 #include "include/big_n.h"
 #include "include/big_z.h"
 #include "include/big_p.h"
+#include <windows.h>
 
 template<class T>
 bool check(T expectation, T reality){
+	/* Compare expectation to reality of any type */
 	bool result = (expectation == reality);
 	if(result == false){
 		std::cout << expectation << " != " << reality << "\n";
-	}	
+	}
+		
     return result;
 }
 
 bool testNat(){
-    BigNat zero("0"), one("1"), a("145"), b("45");
+    BigNat zero("0"), one("1"), a("150"), b("50");
 
     bool isOK = true;
 
-    isOK &= check<BigNat>(a + b, BigNat("190"));
+    isOK &= check<BigNat>(a + b, BigNat("200"));
     isOK &= check<BigNat>(a - b, BigNat("100"));
     isOK &= check<BigNat>(a / b, BigNat("3"));
-    isOK &= check<BigNat>(a * b, BigNat("6525"));
-
+    isOK &= check<BigNat>(a * b, BigNat("7500"));
     isOK &= check<BigNat>(a + zero, a);
     isOK &= check<BigNat>(a - zero, a);
-    //isOK &= check(a / zero, BigNat("3"));
+    isOK &= check<BigNat>(zero + a, a);
     isOK &= check<BigNat>(a * zero, zero);
-
-    isOK &= check<BigNat>(a + one, BigNat("146"));
-    isOK &= check<BigNat>(a - one, BigNat("144"));
+    isOK &= check<BigNat>(a + one, BigNat("151"));
+    isOK &= check<BigNat>(a - one, BigNat("149"));
     isOK &= check<BigNat>(a / one, a);
     isOK &= check<BigNat>(a * one, a);
 
@@ -36,23 +37,28 @@ bool testNat(){
 }
 
 bool testInt(){
-    BigInt zero("0"), one("1"), a("145"), b("-45"), minusOne("-1"), minusA("-145"), minusB("45");
+    BigInt zero("0"), one("1"), a("150"), b("-50"), minusOne("-1"), minusA("-150"), minusB("50");
 
     bool isOK = true;
 
     isOK &= check<BigInt>(a + b, BigInt("100"));
-    isOK &= check<BigInt>(a - b, BigInt("190"));
+    isOK &= check<BigInt>(a - b, BigInt("200"));
     isOK &= check<BigInt>(a / b, BigInt("-3"));
-    isOK &= check<BigInt>(a * b, BigInt("-6525"));
+    isOK &= check<BigInt>(a * b, BigInt("-7500"));
 
     isOK &= check<BigInt>(a + zero, a);
     isOK &= check<BigInt>(a - zero, a);
+    isOK &= check<BigInt>(zero + a, a);
     isOK &= check<BigInt>(zero - a, minusA);
     //isOK &= check(a / zero, BigNat("3"));
     isOK &= check<BigInt>(a * zero, zero);
+    isOK &= check<BigInt>(one + minusOne, zero);
+    isOK &= check<BigInt>(minusOne + one, zero);
 
-    isOK &= check<BigInt>(a + one, BigInt("146"));
-    isOK &= check<BigInt>(a - one, BigInt("144"));
+    isOK &= check<BigInt>(a + one, BigInt("151"));
+    isOK &= check<BigInt>(a - one, BigInt("149"));
+    isOK &= check<BigInt>(one + a, BigInt("151"));
+    isOK &= check<BigInt>(one - a, BigInt("-149"));
     isOK &= check<BigInt>(a / one, a);
     isOK &= check<BigInt>(a * one, a);
 
@@ -88,33 +94,34 @@ bool testFra(){
     return isOK;
 }
 
-/*
+
 bool testPol(){
-    BigPol zero("0 0"), one("1 1"), a("1 2 3 4"), b("1 2 3 4"), c("1 2 3 4 5 6");
+    BigPol zero("0 1"), one("1 1"), a("1 2 3 4"), b("1 2 3 4"), c("1 2 3 4 5 6");
 
     bool isOK = true;
 
     isOK &= check<BigPol>(a + b, BigPol("1 1 3 2"));
     isOK &= check<BigPol>(a - b, BigPol("0 1 0 1"));
-    isOK &= check<BigPol>(a / b, BigPol("3"));
-    isOK &= check<BigPol>(a * b, BigPol("6525"));
-
+    isOK &= check<BigPol>(a / b, BigPol("1 1"));
+    isOK &= check<BigPol>(a * b, BigPol("1 4 6 8 9 16"));
+	
     isOK &= check<BigPol>(a + zero, a);
     isOK &= check<BigPol>(a - zero, a);
-    //isOK &= check(a / zero, BigNat("3"));
     isOK &= check<BigPol>(a * zero, zero);
 
-    isOK &= check<BigPol>(a + one, BigPol("146"));
-    isOK &= check<BigPol>(a - one, BigPol("144"));
-    isOK &= check<BigPol>(a / one, a);
+    isOK &= check<BigPol>(a + one, BigPol("1 2 7 4"));
+    isOK &= check<BigPol>(a - one, BigPol("1 2 -1 4"));
+    
+	isOK &= check<BigPol>(a / one, a);
     isOK &= check<BigPol>(a * one, a);
 
     return isOK;
-}*/
+}
 
-void test_all(){
-    std::cout << "Naturals test: " << testNat() << "\n";
-    std::cout << "Integers test: " << testInt() << "\n";
+enum Colors{green = 10, red = 12};
+void test_all(){	
+    std::cout << "Naturals test: "  << testNat() << "\n";
+    std::cout << "Integers test: "  << testInt() << "\n";
     std::cout << "Fractions test: " << testFra() << "\n";
-    //std::cout << "Polynomial test: " << testPol();
+    std::cout << "Polynoms test: "  << testPol() << "\n";
 }

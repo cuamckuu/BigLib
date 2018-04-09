@@ -11,11 +11,10 @@ private:
 	bool isNegative;
 	
 public:
-	friend std::ostream& operator<< (std::ostream &stream, const BigInt &num);
-	friend std::istream& operator>> (std::istream &stream, BigInt &num);
-	
 	//=====MODULES=====
 	//Author: Alex Kosh 7301
+	friend std::ostream& operator<< (std::ostream &stream, const BigInt &num);
+	friend std::istream& operator>> (std::istream &stream, BigInt &num);
 	
 	friend BigNat ABS_Z_N(BigInt lhs); 				 
 	friend int POZ_Z_D(BigInt lhs); 				 
@@ -28,14 +27,13 @@ public:
 	friend BigInt DIV_ZZ_Z(BigInt lhs, BigInt rhs);  
 	friend BigInt MOD_ZZ_Z(BigInt lhs, BigInt rhs);  
 	
-	//====Extra modules==========
-	
-	friend BigInt POW_ZZ_Z(BigInt lhs, BigInt rhs);
-	
-	//============================
 	//====Friends for BigFra======
 	friend BigFra TRANS_Z_Q(BigInt lhs);
 	
+	//====Extra modules==========
+	friend BigInt POW_ZZ_Z(BigInt lhs, BigInt rhs);
+	
+	//============================
 	//======Operators support======
 	BigInt operator+(const BigInt &rhs);
 	BigInt operator-(const BigInt &rhs);
@@ -49,6 +47,7 @@ public:
 	bool operator<=(const BigInt &rhs); 
 	bool operator>=(const BigInt &rhs);
 	bool operator==(const BigInt &rhs);
+	bool operator!=(const BigInt &rhs);
 	
 	//=============================
 	

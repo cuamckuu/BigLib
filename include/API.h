@@ -9,8 +9,27 @@ void test_all();
 
 namespace API{
 	
-template<class T>
-void result_int_nat(T a, std::string op, T b){
+void result_int(BigInt a, std::string op, BigInt b){
+	/* Operators list for integers */
+	
+	if(op == "+"){
+		std::cout << a + b;	
+	}else if(op == "-"){
+		std::cout << a - b;
+	}else if(op == "*"){
+		std::cout << a * b;
+	}else if(op == "/"){
+		std::cout << a / b;
+	}else if(op == "%"){
+		std::cout << a % b;
+	}else if(op == "POW"){
+		std::cout << POW_ZZ_Z(a, b);
+	}
+}
+
+void result_nat(BigNat a, std::string op, BigNat b){
+	/* Operators list for naturals */
+	
 	if(op == "+"){
 		std::cout << a + b;	
 	}else if(op == "-"){
@@ -25,8 +44,6 @@ void result_int_nat(T a, std::string op, T b){
 		std::cout << GCD_NN_N(a, b);	
 	}else if(op == "LCM"){
 		std::cout << LCM_NN_N(a, b);
-	}else if(op == "POW"){
-		//std::cout << POW_ZZ_Z(a, b);
 	}else if(op == "FAC"){
 		std::cout << FACTOR_N_N(a);
 	}else if(op == "FIB"){
@@ -34,7 +51,11 @@ void result_int_nat(T a, std::string op, T b){
 	}
 }
 
+
+
 void result_fra(BigFra a, std::string op, BigFra b){
+	/* Operators list for fractions */
+	
 	BigFra result;
 	if(op == "+"){
 		result = a + b;
@@ -52,6 +73,8 @@ void result_fra(BigFra a, std::string op, BigFra b){
 }
 
 void result_pol(BigPol a, std::string op, BigPol b){
+	/* Operators list for fractions */
+	
 	if(op == "+"){
 		std::cout << a + b;	
 	}else if(op == "-"){
@@ -69,12 +92,23 @@ void result_pol(BigPol a, std::string op, BigPol b){
 	}else if(op == "DEG"){
 		std::cout << DEG_P_D(a);
 	}else if(op == "GCD"){
-		std::cout << DEG_P_D(a);
+		std::cout << GCD_PP_P(a, b);
+	}else if(op == "NMR"){
+		std::cout << NMR_P_P(a);
 	}
 }
 
 int parse_args(int argc, char *argv[]){
 	if(argc == 1){
+		std::cout << "______ _       _     _ _        ___  ______ _____ \n";
+		std::cout << "| ___ (_)     | |   (_) |      / _ \\ | ___ \\_   _|\n";
+		std::cout << "| |_/ /_  __ _| |    _| |__   / /_\\ \\| |_/ / | |  \n";
+		std::cout << "| ___ \\ |/ _` | |   | | '_ \\  |  _  ||  __/  | |  \n";
+		std::cout << "| |_/ / | (_| | |___| | |_) | | | | || |    _| |_ \n";
+		std::cout << "\\____/|_|\\__, \\_____/_|_.__/  \\_| |_/\\_|    \\___/ \n";
+		std::cout << "          __/ |                                   \n";
+		std::cout << "         |___/                                   \n\n";
+		
 		std::cout << "Use --test or API with such format: 'FILENAME.EXE TYPE NUM1 OPERATOR NUM2'.\n";
 		std::cout << "---------------\n";
 		std::cout << "TYPE can be one from (N, I, F, P).\n";
@@ -102,13 +136,13 @@ int parse_args(int argc, char *argv[]){
 		if(type == "N"){
 	
 			BigNat a(num1), b(num2);
-			result_int_nat(a, op, b);
+			result_nat(a, op, b);
 		
 		}else if(type == "I"){
 			
 			BigInt a(num1), b(num2);
 			
-			result_int_nat(a, op, b);
+			result_int(a, op, b);
 			
 		}
 		
@@ -141,7 +175,7 @@ int parse_args(int argc, char *argv[]){
 		std::string temp;
 		while(ss >> temp){
 			if(temp == "+" || temp == "-" || temp == "*" || temp == "/" || temp == "%" || temp == "LED"
-			|| temp == "DER" || temp == "DEG" || temp == "GCD"){
+			|| temp == "DER" || temp == "DEG" || temp == "GCD" || temp == "NMR"){
 				op = temp;
 				break;
 			}

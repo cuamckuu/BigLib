@@ -15,11 +15,10 @@ protected:
 	std::vector<int> digits; // Digits store in reversed order
 
 public:
-	friend std::ostream& operator<< (std::ostream &stream, const BigNat &num);
-	friend std::istream& operator>> (std::istream &stream, BigNat &num);
-	
 	//=====MODULES=====
 	//Author: Alex Kosh 7301
+	friend std::ostream& operator<< (std::ostream &stream, const BigNat &num);
+	friend std::istream& operator>> (std::istream &stream, BigNat &num);
 	
 	friend int COM_NN_D(BigNat lhs, BigNat rhs); 				 
 	friend bool NZER_N_B(BigNat lhs); 							 
@@ -41,12 +40,11 @@ public:
 	friend BigNat TRANS_Z_N(BigInt lhs);
 	friend BigFra TRANS_Z_Q(BigInt lhs);
 	
-	//======================
 	//==EXTRA MODULES==
 	friend BigNat FACTOR_N_N(BigNat lhs);
 	friend BigNat FIB_N_N(BigNat lhs);
 	
-	
+	//============================
 	//======Operators support======
 	BigNat operator++(int num);
 	BigNat operator+(const BigNat &rhs);
